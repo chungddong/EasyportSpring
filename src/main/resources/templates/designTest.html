@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background-color: #3674FB;
+        }
+
+        body {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+        }
+
+        .LeftView {
+            width: 65%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 3%;
+        }
+
+        .RightView {
+            width: 35%;
+            height: 100%;
+            background-color: white;
+            box-sizing: border-box;
+            padding: 3%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #IdBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 10%;
+            width: 70%;
+            background-color: transparent;
+        }
+        
+        #PwdBox {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 10%;
+            width: 70%;
+            background-color: transparent;
+        }
+
+        #IdText {
+            width: 90%;
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            color: #626262;
+        }
+
+        
+
+        #IdInput {
+            width: 90%;
+            height: 55%;
+            margin-top: 10px;
+            font-size: 20px;
+            border: 0px;
+            border-radius: 10px;
+            background-color: #EFEFEF;
+        }
+
+        #login_title {
+            font-size: 35px;
+            font-weight: bold;
+            color: #424242;
+            text-align: center;
+            margin: 20%;
+        }
+
+        #btn_login {
+            background-color: #3674FB;
+            border: 0px;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            margin-top: 30px;
+            width: 64%;
+            height: 6%;
+        }
+
+        .logo {
+            position: absolute;
+            margin-left: 50px;
+            margin-top: 30px;
+        }
+
+        @media screen and (max-width: 800px) {
+            .LeftView {
+                display: none;
+            }
+
+            .RightView {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="logo.png" id="logoImg" width="120px"/>
+    </div>
+
+    <div class="LeftView">
+        <!-- Left view content -->
+    </div>
+
+    <div class="RightView">
+
+
+        <div id="login_title">
+            로그인
+        </div>
+
+        <div id="IdBox">
+            <div id="IdText">
+                아이디
+            </div>
+            <input id="IdInput" />
+        </div>
+
+        <div id="PwdBox">
+            <div id="IdText">
+                비밀번호
+            </div>
+            <input id="IdInput" />
+        </div>
+
+        <button id="btn_login">
+            로그인
+        </button>
+    </div>
+
+    <script>
+        window.onload = function () {
+            var logoImg = document.getElementById("logoImg");
+            var mediaQuery = window.matchMedia("(max-width: 800px)");
+
+            function handleMediaChange(mediaQuery) {
+                if (mediaQuery.matches) {
+                    // 화면 폭이 800px 이하일 때
+                    logoImg.src = "logo_invert.png";
+                } else {
+                    // 화면 폭이 800px 초과일 때
+                    logoImg.src = "logo.png";
+                }
+            }
+
+            handleMediaChange(mediaQuery);
+            mediaQuery.addListener(handleMediaChange);
+        };
+    </script>
+</body>
+</html>

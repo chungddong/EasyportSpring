@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background-color: #3674FB;
+        }
+
+        body {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+        }
+
+        .LeftView {
+            flex: calc(100% - 300px);
+            transition: flex 0.5s ease;
+            overflow: hidden;
+        }
+
+        .RightView {
+            flex: 100vh;
+            transition: flex 0.5s ease;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            background-color: transparent;
+        }
+
+        #signupbox {
+            width: 65%;
+            height: 70%;
+            background-color: white;
+            border-radius: 1vh;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .loginform {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .InputBox {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 10vh;
+            width: 70%;
+            background-color: transparent;
+        }
+
+        #IdText {
+            width: 90%;
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            color: #626262;
+        }
+
+        
+
+        
+
+        #IdInput {
+            width: 90%;
+            height: 5vh;
+            margin-top: 10px;
+            font-size: 20px;
+            padding-left: 5px;
+            border: 0px;
+            border-radius: 10px;
+            background-color: #EFEFEF;
+        }
+
+        #login_title {
+            font-size: 35px;
+            font-weight: bold;
+            color: #424242;
+            text-align: center;
+            margin: 20%;
+        }
+
+        #btn_login {
+            background-color: #3674FB;
+            border: 0px;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            margin-top: 30px;
+            width: 64%;
+            height: 7vh;
+            
+        }
+
+        .signmenu {
+            color: red;
+        }
+
+        @media screen and (max-width: 900px) {
+            .LeftView {
+                flex: 0;
+            }
+
+            .RightView {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            #signupbox {
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                border-radius: 0vh;
+        }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="LeftView">
+        
+    </div>
+    
+    <div class="RightView">
+        <!-- Right view content -->
+        <div id="signupbox">
+            
+            <div class="loginform" id="login" >
+
+                <div id="login_title">
+                    로그인
+                </div>
+        
+                <div class="InputBox" style="margin-top: 0px;">
+                    <div id="IdText">
+                        아이디
+                    </div>
+                    <input id="IdInput" />
+                </div>
+        
+                <div class="InputBox">
+                    <div id="IdText">
+                        비밀번호
+                    </div>
+                    <input id="IdInput" type="password"/>
+                </div>
+        
+                <button id="btn_login">
+                    로그인
+                </button>
+
+                <div clas="signmenu">
+
+                    <a id="findpwd" href="">비밀번호 찾기</a>
+                    <a id="signin" href="">회원가입</a>
+
+                </div>
+
+            </div>
+
+            <div class="loginform"  id="signup" style="overflow: auto; height: 60vh; display: none; "> 
+
+                <div id="login_title">
+                    회원가입
+                </div>
+        
+                <div class="InputBox">
+                    <div id="IdText">
+                        이름
+                    </div>
+                    <input id="IdInput" />
+                </div>
+        
+                <div class="InputBox">
+                    <div id="IdText">
+                        이메일
+                    </div>
+                    <input id="IdInput" type="email"/>
+                </div>  
+
+                <div class="InputBox">
+                    <div id="IdText">
+                        아이디
+                    </div>
+                    <input id="IdInput" type="email"/>
+                </div>  
+
+                <div class="InputBox">
+                    <div id="IdText">
+                        비밀번호
+                    </div>
+                    <input id="IdInput" type="email"/>
+                </div>  
+        
+                <button id="btn_login" style="height: 7vh;">
+                    로그인
+                </button>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

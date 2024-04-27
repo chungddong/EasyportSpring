@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #3498db; /* 파란색 배경 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #loginForm {
+        background-color: #fff; /* 하얀색 배경 */
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-right: 20px; /* 오른쪽으로 20px 띄우기 */
+        height: 60vh; /* 화면 높이의 60% */
+        width: 30%; /* 화면 너비의 30% */
+    }
+
+    @media (min-width: 768px) { /* 화면 너비가 768px 이상일 때 */
+        #loginForm {
+            margin-left: auto; /* 화면 중앙에서 오른쪽 정렬 */
+        }
+    }
+
+    @media (max-width: 768px) { /* 화면 너비가 768px 이하일 때 */
+        #loginForm {
+            display: block; /* 블록 레벨 요소로 변경하여 세로 중앙 정렬 */
+            margin: auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 80%; /* 화면 너비의 80% */
+            height: auto; /* 자동 높이 조절 */
+        }
+    }
+</style>
+</head>
+<body>
+<div id="loginForm">
+    <!-- 로그인 폼 내용 -->
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Login">
+    </form>
+</div>
+</body>
+</html>
