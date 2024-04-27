@@ -15,22 +15,16 @@ public class EasyportController {
 
     @GetMapping(path = "/")
     public String mains(Model model) {
+        model.addAttribute("siteuser", new SiteUser());
         return "index";
 
     }
 
-    @GetMapping(path = "/signup")
-    public String signup(Model model) {
-        model.addAttribute("siteuser", new SiteUser());
-        return "signup_input";
-
-    }
-
-    @PostMapping(path = "/signup")
+    @PostMapping(path = "/")
     public String signup(@ModelAttribute SiteUser user, Model model) {
 
-        //userRepository.save(user);
-        //model.addAttribute("name", user.getName());
+        userRepository.save(user);
+        model.addAttribute("name", user.getName());
         return "signup_done";
     }
 

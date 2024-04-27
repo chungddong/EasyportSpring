@@ -11,6 +11,7 @@ public class SiteUser {
     private String email;
     private String name;
     private String passwd;
+    private String id;
 
     public String getEmail( ) { return email; }
 
@@ -23,5 +24,10 @@ public class SiteUser {
     public String getPasswd() { return passwd; }
 
     public void setPasswd(String p) { passwd = p; }
+
+    public String getId() { return id; }
+
+    public void setId(String p) { id = p; } 
+
 
 }
