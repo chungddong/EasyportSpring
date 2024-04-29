@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript" src="../js/image.min.js"></script>
     <title>에디터</title>
     <style>
         html,
@@ -69,6 +70,13 @@
             height: 90%;
             padding: 1vh;
             outline: 0;
+            overflow: auto;
+        }
+
+        .editor img {
+            max-width: 100%;
+            border: 0;
+            resize: both;
         }
 
         
@@ -170,7 +178,8 @@
     });
 
     btnJustify.addEventListener('click', function () {
-        setStyle('justifyFull ');
+        //setStyle('justifyFull ');
+        printEditorHTML();
     });
 
     btnLeftalign.addEventListener('click', function () {
@@ -190,8 +199,17 @@
         //글씨 스타일 지정함수 style에 넣는 값으로 스타일 지정
         document.execCommand(style, false, null);
         editor.focus({preventScroll: true}); //에디터에 포커스
+    }   
+
+
+    function printEditorHTML()
+    {
+        // 에디터 내용 가져오기
+        var editorContent = editor.innerHTML;
+
+        // HTML로 변환된 내용 출력 (예를 들어, 콘솔에 로그로 출력)
+        console.log(editorContent);
     }
-    
 
     
 
