@@ -51,6 +51,8 @@
             justify-content: center;
             border-radius: 0.5vh;
             cursor: pointer;
+            border: 0px;
+            background-color: transparent;
         }
 
         .fontbox:hover {
@@ -65,6 +67,7 @@
         .editor {
             background-color: transparent;
             height: 90%;
+            padding: 1vh;
         }
 
         
@@ -77,54 +80,61 @@
 
         <div class="toolBar">
 
+            <button class="fontbox" onclick="increaseFontSize()">
+                <i class="fa-solid fa-chevron-up fa-1x"></i>
+            </button>
+            <button class="fontbox" onclick="decreaseFontSize()">
+                <i class="fa-solid fa-chevron-down fa-1x"></i>
+            </button>
+
             <span class="fontbox">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </span>
-            <span class="fontbox">
+            <button class="fontbox" id="btnBold">
                 <i class="fa-solid fa-bold fa-1x"></i>
-            </span>
-            <span class="fontbox">
+            </button>
+            <button class="fontbox" id="btnItalic">
                 <i class="fa-solid fa-italic fa-1x"></i>
-            </span>
-            <span class="fontbox">
+            </button>
+            <button class="fontbox" id="btnUnderline">
                 <i class="fa-solid fa-underline"></i>
-            </span>
+            </button>
 
             <span class="fontbox">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </span>
 
-            <span class="fontbox">
+            <button class="fontbox" id="btnJustify">
                 <i class="fa-solid fa-align-justify"></i>
-            </span>
-            <span class="fontbox">
+            </button>
+            <button class="fontbox" id="btnLeftalign">
                 <i class="fa-solid fa-align-left"></i>
-            </span>
-            <span class="fontbox">
+            </button>
+            <button class="fontbox" id="btnCenteralign">
                 <i class="fa-solid fa-align-center"></i>
-            </span>
-            <span class="fontbox">
+            </button>
+            <button class="fontbox" id="btnRightalign">
                 <i class="fa-solid fa-align-right"></i>
-            </span>
+            </button>
 
             <span class="fontbox">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </span>
 
-            <span class="fontbox">
+            <button class="fontbox" id="btnList">
                 <i class="fa-solid fa-list-ul"></i>
-            </span>
-            <span class="fontbox">
+            </button>
+            <button class="fontbox" id="btnFill">
                 <i class="fa-solid fa-fill"></i>
-            </span>
-            <span class="fontbox">
+            </button>
+            <button class="fontbox" id="btnImage">
                 <i class="fa-regular fa-image"></i>
-            </span>
+            </button>
 
 
         </div>
 
-        <div class="editor" contenteditable="true">
+        <div class="editor" id="editor" contenteditable="true">
 
             
 
@@ -136,6 +146,50 @@
 </body>
 
 <script>
+
+    const editor = document.getElementById('editor');
+    const btnBold = document.getElementById('btnBold');
+    const btnItalic = document.getElementById('btnItalic');
+    const btnUnderline = document.getElementById('btnUnderline');
+    const btnJustify = document.getElementById('btnJustify');
+    const btnLeftalign = document.getElementById('btnLeftalign');
+    const btnCenteralign = document.getElementById('btnCenteralign');
+
+
+    btnBold.addEventListener('click', function () {
+        setStyle('bold');
+    });
+
+    btnItalic.addEventListener('click', function () {
+        setStyle('italic');
+    });
+
+    btnUnderline.addEventListener('click', function () {
+        setStyle('underline');
+    });
+
+    btnJustify.addEventListener('click', function () {
+        setStyle('justifyFull ');
+    });
+
+    btnLeftalign.addEventListener('click', function () {
+        setStyle('justifyLeft');
+    });
+
+    btnCenteralign.addEventListener('click', function () {
+        setStyle('justifyCenter');
+    });
+
+    // TODO : 지정 안하고 추가해야하는 서식들 추가해야함
+
+
+    function setStyle(style) 
+    {
+        //글씨 스타일 지정함수 style에 넣는 값으로 스타일 지정
+        document.execCommand(style, false, null);
+        editor.focus({preventScroll: true}); //에디터에 포커스
+    }
+    
 
     
 
