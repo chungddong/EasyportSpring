@@ -1,0 +1,22 @@
+<! DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <title>사용자 등록</title>
+    </head>
+
+    <body>
+
+        <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*">
+            <br>
+            <button type="submit">업로드</button>
+        </form>
+        
+        
+        <a th:href="@{/image-list}">List로 가기</a>
+    </body>
+
+</html>
