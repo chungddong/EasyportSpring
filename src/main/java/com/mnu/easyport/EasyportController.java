@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class EasyportController {
@@ -35,6 +38,33 @@ public class EasyportController {
         return "signup_done";
     }
 
+    @PostMapping("/login")
+    public String loginUser(@RequestParam(name = "email") String email, 
+        @RequestParam(name = "passwd") String passwd, HttpSession session, RedirectAttributes rd) {
+        
+        SiteUser user = userRepository.findByEmail(email);
+        if(user != null) {
+            if(passwd.equals(user.getPasswd())) {
+                session.setAttribute("email", email);
+                return "myroom"; //로그인 성공시 myroom 으로 이동
+            }
+        }
+
+        rd.addFlashAttribute("reason", "wrong password");
+        return "redirect:/error";
+    }
+
+    @GetMapping("/login")
+    public String loginForm() {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
+
 
 
     
@@ -50,5 +80,7 @@ public class EasyportController {
         azureBlobService.uploadBlobFromFile(containerName, blobName, file.getInputStream());
         return "redirect:/upload?success";
     }
+
+    
 
 }
