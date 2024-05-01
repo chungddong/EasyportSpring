@@ -1,6 +1,14 @@
 package com.mnu.easyport;
 
+import java.io.*;
+import java.util.*;
+import java.nio.charset.StandardCharsets;
+
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,6 +16,12 @@ import java.util.List;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,8 +41,6 @@ public class EasyportController {
     @Autowired
     private SiteUserRepository userRepository;
 
-    @Autowired
-    private ImageService imageService;
 
     @GetMapping(path = "/")
     public String mains(Model model) {
@@ -45,32 +57,25 @@ public class EasyportController {
         return "signup_done";
     }
 
+    // 파일 업로드
+    @PostMapping(path = "/upload")
+    public String upload(@RequestParam MultipartFile file,
+            Model model) throws IllegalStateException, IOException {
+
+        if (!file.isEmpty()) {
+            String newName = file.getOriginalFilename();
+            newName = newName.replace(' ', '_');
+            FileDto dto = new FileDto(newName, file.getContentType());
+            File upfile = new File(dto.getFileName());
+            file.transferTo(upfile);
+            model.addAttribute("file", dto);
+
+        }
+
+        return "result";
+
+    }
+
     
-
-    @GetMapping("/upload")
-    public ModelAndView home() {
-        ModelAndView mv = new ModelAndView("imageupload");
-        List<Image> imageList = imageService.viewAll();
-        mv.addObject("imageList", imageList);
-        return mv;
-    }
-
-    // add image - get
-    @GetMapping("/add")
-    public ModelAndView addImage() {
-        return new ModelAndView("addimage");
-    }
-
-    @PostMapping("/add")
-    public String addImagePost(HttpServletRequest request,@RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException
-    {
-        byte[] bytes = file.getBytes();
-        Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-
-        Image image = new Image();
-        image.setImage(blob);
-        imageService.create(image);
-        return "redirect:/upload";
-    }
 
 }
