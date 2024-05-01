@@ -49,7 +49,7 @@ jobs:
       - name: Install Oracle JDBC driver
         run: |
           wget https://download.oracle.com/otn-pub/otn_software/jdbc/233/ojdbc11.jar
-          mvn install:install-file -Dfile=ojdbc.jar -DgroupId=com.oracle -DartifactId=ojdbc -Dversion=19.3.0.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=ojdbc8.jar -DgroupId=com.oracle.database.jdbc -DartifactId=ojdbc8 -Dversion=19.3.0.0 -Dpackaging=jar
 
       - name: Build with Maven
         run: mvn clean install
