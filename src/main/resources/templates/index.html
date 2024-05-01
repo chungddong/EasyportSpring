@@ -155,7 +155,7 @@
 
         <div class="LogoBox">
 
-            <img src="https://easyportstorage.blob.core.windows.net/defaultimages/icon_white.png" width="250vh"/>
+            <img src="https://easyportstorage.blob.core.windows.net/defaultimages/icon_white.png" width="200vh"/>
             <div id="LogoText">쉽고 빠른 포트폴리오 등록</div>
 
         </div>
@@ -167,7 +167,7 @@
         <div id="signupbox">
 
             <form class="signform" id="LoginState" action="#"  
-            th:action="@{/}" th:object="${siteuser}" method="post">
+            th:action="@{/login}" th:object="${siteuser}" method="post">
 
                 <div class="formtitle">로그인</div>
 
@@ -187,7 +187,7 @@
             </form>
 
             <form class="signform" id="SignupState" action="#"
-            th:action="@{/}" th:object="${siteuser}" method="post">
+            th:action="@{/signup}" th:object="${siteuser}" method="post">
 
                 <div class="formtitle">회원가입</div>
 

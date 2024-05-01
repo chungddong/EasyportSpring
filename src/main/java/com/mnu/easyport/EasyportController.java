@@ -27,7 +27,7 @@ public class EasyportController {
 
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "/signup")
     public String signup(@ModelAttribute SiteUser user, Model model) {
 
         userRepository.save(user);
@@ -35,6 +35,9 @@ public class EasyportController {
         return "signup_done";
     }
 
+
+
+    
     @GetMapping("/upload")
     public String showUploadForm() {
         return "upload";
