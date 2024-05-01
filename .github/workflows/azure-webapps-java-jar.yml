@@ -55,6 +55,11 @@ jobs:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
 
+      - name: Install Oracle JDBC driver
+        run: |
+          wget https://path/to/ojdbc.jar
+          mvn install:install-file -Dfile=ojdbc.jar -DgroupId=com.oracle -DartifactId=ojdbc -Dversion=21.9.0.0 -Dpackaging=jar
+
   deploy:
     permissions:
       contents: none
