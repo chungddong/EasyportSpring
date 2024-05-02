@@ -30,6 +30,10 @@ public class EasyportController {
 
     }
 
+
+    //로그인, 회원가입 관련
+    //===============================================================================================================================
+
     @PostMapping(path = "/signup")
     public String signup(@ModelAttribute SiteUser user, Model model) {
 
@@ -51,8 +55,9 @@ public class EasyportController {
         }
 
         rd.addFlashAttribute("reason", "wrong password");
-        return "redirect:/error";
+        return "redirect:/error"; //TODO: 에러 페이지 만들어야함
     }
+
 
     @GetMapping("/login")
     public String loginForm() {
@@ -65,8 +70,11 @@ public class EasyportController {
         return "index";
     }
 
+    //===============================================================================================================================
 
 
+    //파일 업로드 관련 [이미지]
+    //===============================================================================================================================
     
     @GetMapping("/upload")
     public String showUploadForm() {
@@ -79,6 +87,12 @@ public class EasyportController {
         String blobName = file.getOriginalFilename();
         azureBlobService.uploadBlobFromFile(containerName, blobName, file.getInputStream());
         return "redirect:/upload?success";
+    }
+
+    @GetMapping("/home")
+    public String homePage(Model model) {
+        // 컨트롤러 로직을 수행하고 필요한 데이터를 모델에 추가
+        return "home"; // home.html을 렌더링
     }
 
     

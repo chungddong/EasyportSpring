@@ -1,0 +1,50 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    background-color: white;
+    width: 100%;
+    height: 5vh;
+    min-height: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo {
+    flex: 1;
+    margin-left: 5vh;
+}
+
+.logo img {
+    width: 13vh;
+    cursor: pointer;
+}
+
+.user {
+    flex: 1;
+    align-items: end;
+    margin-right: 5vh;
+    display: flex;
+    justify-content: flex-end;
+    color: #3674FB;
+    cursor: pointer;
+}
+
+.bottom {
+    background-color: #3674FB;
+    width: 100%;
+    height: 2vh;
+    min-height: 13px;
+}

@@ -15,5 +15,5 @@ public class AzureStorageConfig {
     @Bean
     public BlobServiceClient blobServiceClient() {
         return new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
-    }
+    } 
 }
