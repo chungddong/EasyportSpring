@@ -27,6 +27,9 @@ public class EasyportController {
     @Autowired
     private AzureBlobService azureBlobService;
 
+    @Autowired
+    private ProfileRepository profileRepository;
+
     @GetMapping(path = "/")
     public String mains(Model model) {
         model.addAttribute("siteuser", new SiteUser());
@@ -41,18 +44,24 @@ public class EasyportController {
     public String signup(@ModelAttribute SiteUser user, Model model) {
 
         userRepository.save(user);
+        Profile profile = new Profile();
+        profile.setUserid(user.getUserid());
+        profile.setContent("");
+        profileRepository.save(profile);
+        
         model.addAttribute("name", user.getName());
         return "signup_done";
     }
 
+    //로그인 요청 시
     @PostMapping("/myhome")
-    public String loginUser(@RequestParam(name = "email") String email,
+    public String loginUser(@RequestParam(name = "userid") String userid,
             @RequestParam(name = "passwd") String passwd, HttpSession session, RedirectAttributes rd) {
 
-        SiteUser user = userRepository.findByEmail(email);
+        SiteUser user = userRepository.findByUserid(userid);
         if (user != null) {
             if (passwd.equals(user.getPasswd())) {
-                session.setAttribute("email", email);
+                session.setAttribute("userid", userid);
                 return "redirect:/myhome"; // 로그인 성공시 myhome 으로 이동
             }
         }
@@ -91,10 +100,13 @@ public class EasyportController {
     public String showHomePage(HttpSession session, Model model) {
         List<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
-        String userEmail = (String) session.getAttribute("email");
-        if (userEmail == null) {
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null) {
             return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
         }
+
+        Profile profile = profileRepository.findByUserid(userid);
+        model.addAttribute("profile", profile);
         return "myhome";
     }
 

@@ -1,6 +1,5 @@
 package com.mnu.easyport;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -11,20 +10,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "siteuser")
+@Table(name = "profiles")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SiteUser {
 
+//새로운 프로필 정보를 저장하기 위한 엔티티 클래스
+public class Profile {
     @Id
     @GeneratedValue
     private Long id;
-    private String email;
-    private String name;
-    private String passwd;
     private String userid;
-
-
+    private String content;
 }
