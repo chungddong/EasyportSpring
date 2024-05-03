@@ -45,7 +45,7 @@ public class EasyportController {
         return "signup_done";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/myhome")
     public String loginUser(@RequestParam(name = "email") String email,
             @RequestParam(name = "passwd") String passwd, HttpSession session, RedirectAttributes rd) {
 
@@ -53,7 +53,7 @@ public class EasyportController {
         if (user != null) {
             if (passwd.equals(user.getPasswd())) {
                 session.setAttribute("email", email);
-                return "home"; // 로그인 성공시 home 으로 이동
+                return "redirect:/myhome"; // 로그인 성공시 myhome 으로 이동
             }
         }
 
@@ -61,10 +61,7 @@ public class EasyportController {
         return "redirect:/error"; // TODO: 에러 페이지 만들어야함
     }
 
-    @GetMapping("/login")
-    public String loginForm() {
-        return "login";
-    }
+    
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -90,15 +87,15 @@ public class EasyportController {
         return "redirect:/upload?success";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/myhome")
     public String showHomePage(HttpSession session, Model model) {
-        Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) {
+        List<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
+        String userEmail = (String) session.getAttribute("email");
+        if (userEmail == null) {
             return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
         }
-        // 데이터 가져오기 및 모델에 추가
-        model.addAttribute("posts", postRepository.findAll());
-        return "home";
+        return "myhome";
     }
 
     @GetMapping("/header")
@@ -110,12 +107,9 @@ public class EasyportController {
 
     @GetMapping("/editport") //포트폴리오 작성 페이지
     public String showEditPortPage(HttpSession session, Model model) {
-        Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) {
-            return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
-        }
+        
         Post post = new Post();
-        post.setAuthor(userId.toString()); // 작성자 정보를 현재 로그인한 사용자로 설정
+        //post.setAuthor(userEmail.toString()); // 작성자 정보를 현재 로그인한 사용자로 설정
         model.addAttribute("post", post);
         return "editport";
     }
@@ -124,7 +118,7 @@ public class EasyportController {
     @PostMapping("/savePost")
     public String savePost(@ModelAttribute("post") Post post) {
         postRepository.save(post);
-        return "redirect:/home";
+        return "redirect:/myhome";
     }
 
 }

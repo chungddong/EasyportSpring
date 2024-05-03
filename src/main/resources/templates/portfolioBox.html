@@ -11,28 +11,14 @@
 </head>
 
 <body>
-    <!-- 다른 내용과 함께 헤더 템플릿 포함 -->
-    <div th:insert="~{/header::header}"></div>
 
-    <!-- 나머지 페이지 내용 -->
-    <div class="home_mainbox">
+    <div class="portfolioBox" th:fragment="portfolioBox">
 
-        <div class="profileBox">
-
-
-
-        </div>
-
-        <div class="portfolioBox">
-
-            포트폴리오 목록
-            <button class="addtbtn">추가</button>
-            <div class="card-container">
-                <div class="card-item" th:each="post : ${posts}">
-                    <h3 th:text="${post.title}">제목</h3>
-                </div>
+        포트폴리오 목록
+        <div class="card-container">
+            <div class="card-item" th:each="post : ${posts}">
+                <h3 th:text="${post.title}">제목</h3>
             </div>
-
         </div>
 
     </div>
@@ -41,6 +27,18 @@
 </body>
 
 <script>
+
+    const cardContainer = document.querySelector('.card-container');
+    const testBtn = document.querySelector('.testbtn');
+
+    testBtn.addEventListener('click', createCardItem);
+
+    function createCardItem() {
+        const cardItem = document.createElement('div');
+        cardItem.classList.add('card-item');
+        cardItem.textContent = 'Card Item';
+        cardContainer.appendChild(cardItem);
+    }
 
     const addBtn = document.querySelector('.addtbtn');
 

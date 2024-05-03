@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/home.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>나의 프로필</title>
+
+</head>
+
+<body>
+    <!-- 다른 내용과 함께 헤더 템플릿 포함 -->
+    <div th:insert="~{/header::header}"></div>
+
+    <!-- 나머지 페이지 내용 -->
+    <div class="home_mainbox">
+
+        <div class="profileBox">
+
+
+
+        </div>
+
+        <button class="testbtn">테스트</button>
+        <button class="addtbtn">추가</button>
+
+        <div th:insert="~{/portfolioBox::portfolioBox}" class="portfolioBox"></div>
+
+    </div>
+
+
+</body>
+
+<script>
+
+    const cardContainer = document.querySelector('.card-container');
+    const testBtn = document.querySelector('.testbtn');
+
+    testBtn.addEventListener('click', createCardItem);
+
+    function createCardItem() {
+        const cardItem = document.createElement('div');
+        cardItem.classList.add('card-item');
+        cardItem.textContent = 'Card Item';
+        cardContainer.appendChild(cardItem);
+    }
+
+    const addBtn = document.querySelector('.addtbtn');
+
+    addBtn.addEventListener('click', () => {
+        window.location.href = '/editport'; // editport.html 페이지로 이동
+    });
+
+</script>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // 포스트 목록을 포함한 요소들을 가져옴
+        var postItems = document.querySelectorAll('.card-item');
+
+        // 포스트 목록 콘솔 출력
+        console.log("포스트 목록:");
+        postItems.forEach(function(item) {
+            var titleElement = item.querySelector('h3');
+            var titleText = titleElement.textContent.trim();
+            console.log("- " + titleText);
+        });
+    });
+</script>
+
+</html>
