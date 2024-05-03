@@ -46,7 +46,7 @@ public class EasyportController {
         userRepository.save(user);
         Profile profile = new Profile();
         profile.setUserid(user.getUserid());
-        profile.setContent("");
+        profile.setIntroduce("");
         profileRepository.save(profile);
         
         model.addAttribute("name", user.getName());
@@ -98,12 +98,13 @@ public class EasyportController {
 
     @GetMapping("/myhome")
     public String showHomePage(HttpSession session, Model model) {
-        List<Post> posts = postRepository.findAll();
-        model.addAttribute("posts", posts);
         String userid = (String) session.getAttribute("userid");
         if (userid == null) {
             return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
         }
+
+        List<Post> posts = postRepository.findByUserid(userid);
+        model.addAttribute("posts", posts);
 
         Profile profile = profileRepository.findByUserid(userid);
         model.addAttribute("profile", profile);
@@ -118,10 +119,13 @@ public class EasyportController {
     }
 
     @GetMapping("/editport") //포트폴리오 작성 페이지
-    public String showEditPortPage(HttpSession session, Model model) {
-        
+    public String showEditPortPage(HttpSession session, Model model) { 
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null) {
+            return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
+        }
         Post post = new Post();
-        //post.setAuthor(userEmail.toString()); // 작성자 정보를 현재 로그인한 사용자로 설정
+        post.setUserid(userid); //작성자 id 지정
         model.addAttribute("post", post);
         return "editport";
     }
@@ -130,6 +134,31 @@ public class EasyportController {
     @PostMapping("/savePost")
     public String savePost(@ModelAttribute("post") Post post) {
         postRepository.save(post);
+        return "redirect:/myhome";
+    }
+
+    //프로필 업데이트 창 이동
+    @GetMapping("/updateProfile")
+    public String profilePage(HttpSession session, Model model) {
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null) {
+            return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
+        }
+
+        Profile profile = profileRepository.findByUserid(userid);
+        model.addAttribute("profile", profile);
+
+        return "updateProfile"; // home.html을 렌더링
+    }
+
+    // 프로필 수정 로직
+    @PostMapping("/updateProfile")
+    public String updateProfile(HttpSession session, @ModelAttribute("profile") Profile profile) {
+        String userid = (String) session.getAttribute("userid");
+        Long id = profileRepository.findByUserid(userid).getId();
+        profile.setId(id);
+        profile.setUserid(userid);
+        profileRepository.save(profile);
         return "redirect:/myhome";
     }
 

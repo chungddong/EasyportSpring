@@ -22,5 +22,8 @@ public class Profile {
     @GeneratedValue
     private Long id;
     private String userid;
-    private String content;
+    private String introduce;
+    private String phone;
+    private String email;
+    private String imgurl;
 }

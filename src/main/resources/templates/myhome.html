@@ -20,12 +20,13 @@
         <div class="profileBox">
 
             <p th:text="|${profile.userid}님|" />
-            <p th:text="|${profile.content}님|" />
+            <p th:text="|${profile.introduce}님|" />
+
+            <button class="profilebtn">프로필 수정</button>
 
         </div>
 
-        <button class="testbtn">테스트</button>
-        <button class="addtbtn">추가</button>
+        <button class="addbtn">추가</button>
 
         <div th:insert="~{/portfolioBox::portfolioBox}" class="portfolioBox"></div>
 
@@ -36,11 +37,6 @@
 
 <script>
 
-    const cardContainer = document.querySelector('.card-container');
-    const testBtn = document.querySelector('.testbtn');
-
-    testBtn.addEventListener('click', createCardItem);
-
     function createCardItem() {
         const cardItem = document.createElement('div');
         cardItem.classList.add('card-item');
@@ -48,11 +44,25 @@
         cardContainer.appendChild(cardItem);
     }
 
-    const addBtn = document.querySelector('.addtbtn');
+    function onclickCardItem(itemid) {
+        console.log('클릭 아이템 ID : ' + itemid);
+    }
+
+    const addBtn = document.querySelector('.addbtn');
+    const profilebtn = document.querySelector('.profilebtn');
 
     addBtn.addEventListener('click', () => {
         window.location.href = '/editport'; // editport.html 페이지로 이동
     });
+
+    profilebtn.addEventListener('click', () => {
+        window.location.href = '/updateProfile'; // editport.html 페이지로 이동
+    });
+
+    function logoClick()
+    {
+        window.location.href = '/';
+    }
 
 </script>
 

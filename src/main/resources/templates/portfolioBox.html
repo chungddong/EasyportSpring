@@ -16,9 +16,11 @@
 
         포트폴리오 목록
         <div class="card-container">
-            <div class="card-item" th:each="post : ${posts}">
+            <div class="card-item" th:each="post : ${posts}" id="${post.id}" onclick="onclickCardItem(this.id)">
                 <h3 th:text="${post.title}">제목</h3>
             </div>
+
+            
         </div>
 
     </div>
@@ -32,12 +34,17 @@
     const testBtn = document.querySelector('.testbtn');
 
     testBtn.addEventListener('click', createCardItem);
+    
 
     function createCardItem() {
         const cardItem = document.createElement('div');
         cardItem.classList.add('card-item');
         cardItem.textContent = 'Card Item';
         cardContainer.appendChild(cardItem);
+    }
+
+    function onclickCardItem(itemid) {
+        console.log('클릭 아이템 ID : ' + itemid);
     }
 
     const addBtn = document.querySelector('.addtbtn');

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>프로필 수정</title>
+</head>
+<body>
+    <h1>프로필 수정</h1>
+    <form action="/updateProfile" method="post" th:object="${profile}">
+        <label for="phone">Email:</label>
+        <input type="email" th:field="*{email}" value="${profile.email}">
+        <br>
+        <label for="phone">Phone Number:</label>
+        <input type="text" maxlength="13" th:field="*{phone}" value="${profile.phone}">
+        <br>
+        <label for="introduce">introduce:</label>
+        <textarea id="bio" th:field="*{introduce}" rows="4" cols="50" th:text="${profile.introduce}"></textarea>
+        <br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
+
+<script>
+
+</script>
