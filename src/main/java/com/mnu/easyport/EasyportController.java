@@ -108,9 +108,15 @@ public class EasyportController {
         return "header"; // home.html을 렌더링
     }
 
-    @GetMapping("/editport")
-    public String showEditPortPage(Model model) {
-        model.addAttribute("post", new Post());
+    @GetMapping("/editport") //포트폴리오 작성 페이지
+    public String showEditPortPage(HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
+        }
+        Post post = new Post();
+        post.setAuthor(userId.toString()); // 작성자 정보를 현재 로그인한 사용자로 설정
+        model.addAttribute("post", post);
         return "editport";
     }
 
