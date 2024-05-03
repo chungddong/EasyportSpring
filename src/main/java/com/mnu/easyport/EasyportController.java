@@ -1,6 +1,7 @@
 package com.mnu.easyport;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class EasyportController {
     private SiteUserRepository userRepository;
 
     @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
     private AzureBlobService azureBlobService;
 
     @GetMapping(path = "/")
@@ -30,9 +34,8 @@ public class EasyportController {
 
     }
 
-
-    //로그인, 회원가입 관련
-    //===============================================================================================================================
+    // 로그인, 회원가입 관련
+    // ===============================================================================================================================
 
     @PostMapping(path = "/signup")
     public String signup(@ModelAttribute SiteUser user, Model model) {
@@ -43,21 +46,20 @@ public class EasyportController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestParam(name = "email") String email, 
-        @RequestParam(name = "passwd") String passwd, HttpSession session, RedirectAttributes rd) {
-        
+    public String loginUser(@RequestParam(name = "email") String email,
+            @RequestParam(name = "passwd") String passwd, HttpSession session, RedirectAttributes rd) {
+
         SiteUser user = userRepository.findByEmail(email);
-        if(user != null) {
-            if(passwd.equals(user.getPasswd())) {
+        if (user != null) {
+            if (passwd.equals(user.getPasswd())) {
                 session.setAttribute("email", email);
-                return "header"; //로그인 성공시 home 으로 이동
+                return "home"; // 로그인 성공시 home 으로 이동
             }
         }
 
         rd.addFlashAttribute("reason", "wrong password");
-        return "redirect:/error"; //TODO: 에러 페이지 만들어야함
+        return "redirect:/error"; // TODO: 에러 페이지 만들어야함
     }
-
 
     @GetMapping("/login")
     public String loginForm() {
@@ -70,12 +72,11 @@ public class EasyportController {
         return "index";
     }
 
-    //===============================================================================================================================
+    // ===============================================================================================================================
 
+    // 파일 업로드 관련 [이미지]
+    // ===============================================================================================================================
 
-    //파일 업로드 관련 [이미지]
-    //===============================================================================================================================
-    
     @GetMapping("/upload")
     public String showUploadForm() {
         return "upload";
@@ -90,17 +91,34 @@ public class EasyportController {
     }
 
     @GetMapping("/home")
-    public String homePage(Model model) {
-        // 컨트롤러 로직을 수행하고 필요한 데이터를 모델에 추가
-        return "home"; // home.html을 렌더링
+    public String showHomePage(HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/"; //로그인 정보가 없으면 로그인 화면으로 이동
+        }
+        // 데이터 가져오기 및 모델에 추가
+        model.addAttribute("posts", postRepository.findAll());
+        return "home";
     }
 
     @GetMapping("/header")
     public String headerPage(Model model) {
-        // 컨트롤러 로직을 수행하고 필요한 데이터를 모델에 추가
+        List<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
         return "header"; // home.html을 렌더링
     }
 
-    
+    @GetMapping("/editport")
+    public String showEditPortPage(Model model) {
+        model.addAttribute("post", new Post());
+        return "editport";
+    }
+
+    // 글 저장 로직
+    @PostMapping("/savePost")
+    public String savePost(@ModelAttribute("post") Post post) {
+        postRepository.save(post);
+        return "redirect:/home";
+    }
 
 }

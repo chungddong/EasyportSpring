@@ -1,0 +1,44 @@
+.home_mainbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileBox {
+    width: 90%;
+    height: 35vh;
+    background-color: gray;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    border-radius: 1vh;
+}
+
+.portfolioBox {
+    width: 90%;
+    height: 95vh;
+    background-color: gray;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    border-radius: 1vh;
+}
+
+.testbtn {
+    width: 10vh;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.card-item {
+    width: 200px;
+    height: 150px;
+    background-color: #f1f1f1;
+    margin: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

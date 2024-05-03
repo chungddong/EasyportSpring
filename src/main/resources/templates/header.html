@@ -153,7 +153,33 @@
             <div class="portfolioBox">
 
                 포트폴리오 목록
-                <div class="card-container"></div>
+                <div class="card-container">
+                    <div class="card-item" th:each="post : ${posts}">
+                        <h3 th:text="${post.title}">제목</h3>
+                    </div><div class="home_mainbox">
+
+            <div class="profileBox">
+
+
+
+            </div>
+
+            <button class="testbtn">테스트</button>
+            <button class="addtbtn">추가</button>
+
+            <div class="portfolioBox">
+
+                포트폴리오 목록
+                <div class="card-container">
+                    <div class="card-item" th:each="post : ${posts}">
+                        <h3 th:text="${post.title}">제목</h3>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+                </div>
 
             </div>
 
@@ -176,6 +202,14 @@
             cardItem.textContent = 'Card Item';
             cardContainer.appendChild(cardItem);
         }
+
+        const addBtn = document.querySelector('.addtbtn');
+
+        addBtn.addEventListener('click', () => {
+            window.location.href = '/editport'; // editport.html 페이지로 이동
+        });
+
+
 
     </script>
 
