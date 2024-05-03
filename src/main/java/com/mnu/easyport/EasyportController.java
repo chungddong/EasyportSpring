@@ -50,7 +50,7 @@ public class EasyportController {
         if(user != null) {
             if(passwd.equals(user.getPasswd())) {
                 session.setAttribute("email", email);
-                return "myroom"; //로그인 성공시 myroom 으로 이동
+                return "header"; //로그인 성공시 home 으로 이동
             }
         }
 
@@ -93,6 +93,12 @@ public class EasyportController {
     public String homePage(Model model) {
         // 컨트롤러 로직을 수행하고 필요한 데이터를 모델에 추가
         return "home"; // home.html을 렌더링
+    }
+
+    @GetMapping("/header")
+    public String headerPage(Model model) {
+        // 컨트롤러 로직을 수행하고 필요한 데이터를 모델에 추가
+        return "header"; // home.html을 렌더링
     }
 
     
