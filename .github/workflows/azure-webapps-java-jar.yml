@@ -24,6 +24,10 @@ env:
   JAVA_VERSION: '17'                  # set this to the Java version to use
   DISTRIBUTION: zulu                  # set this to the Java distribution
 
+  DB_URL: jdbc:oracle:thin:@studyswh.synology.me:49154:xe
+  DB_USERNAME: SCOTT
+  DB_PASSWORD: tiger
+
 on:
   push:
     branches: [ "main" ]
@@ -52,7 +56,7 @@ jobs:
           mvn install:install-file -Dfile=ojdbc11.jar -DgroupId=com.oracle.database.jdbc -DartifactId=ojdbc11 -Dversion=21.9.0.0 -Dpackaging=jar
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install -Dspring.datasource.url=$DB_URL -Dspring.datasource.username=$DB_USERNAME -Dspring.datasource.password=$DB_PASSWORD
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
