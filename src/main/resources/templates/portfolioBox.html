@@ -12,12 +12,34 @@
 
 <body>
 
-    <div class="portfolioBox" th:fragment="portfolioBox">
+    <div th:fragment="portfolioBox">
 
-        포트폴리오 목록
+        <div class="titleBox">
+            <div class="protfolioTitle">포트폴리오 목록</div>
+            <button class="addbtn">추가</button>
+        </div>
+        
         <div class="card-container">
             <div class="card-item" th:each="post : ${posts}" id="${post.id}" onclick="onclickCardItem(this.id)">
-                <h3 th:text="${post.title}">제목</h3>
+
+                <div class="card-cover">
+                    <img src="https://easyportstorage.blob.core.windows.net/defaultimages/test.jpg" style="width:100%"> 
+                </div>
+
+                <div class="card-info">
+                    <p class="card-title" th:text="${post.title}">타이틀</p>
+        				<div class="dropdown">
+        					<button class="dropbtn">
+        						<span>···</span>
+        					</button>
+        					<div class="dropdown-content">
+        						<a href="#">수정</a> 
+        						<a href="#">삭제</a>
+        					</div>
+        				</div>
+                </div>
+
+                
             </div>
 
             

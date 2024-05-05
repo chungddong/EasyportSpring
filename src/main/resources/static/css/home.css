@@ -4,27 +4,66 @@
     align-items: center;
 }
 
-.profileBox {
+.titleBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.proBox {
     width: 90%;
-    height: 35vh;
-    background-color: gray;
+    background-color: transparent;
     margin-top: 3vh;
     margin-bottom: 3vh;
     border-radius: 1vh;
+}
+
+.divider {
+    width: 88%;
+    border: 1px solid #6e6e6e;
+}
+
+
+.portbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .portfolioBox {
     width: 90%;
     height: 95vh;
-    background-color: gray;
+    background-color: transparent;
     margin-top: 3vh;
     margin-bottom: 3vh;
     border-radius: 1vh;
 }
 
-.testbtn {
-    width: 10vh;
+.protfolioTitle
+{
+    flex: 9;
+    color: #383838;
+    margin-left: 10px;
+    font-size: 4vh;
+    margin-bottom: 2vh;
+    font-weight: 700;
 }
+
+.addbtn {
+    flex: 1;
+    background-color: white;
+    border: 1px solid #383838;
+    border-radius: 2vh;
+    height: 40%;
+}
+
+.addbtn:hover {
+    cursor: pointer;
+    background-color: #3674FB;
+    color: white;
+}
+
 
 .card-container {
     display: flex;
@@ -33,12 +72,95 @@
 }
 
 .card-item {
+    display: flex;
+    flex-direction: column;
     width: 200px;
     height: 150px;
     background-color: #f1f1f1;
     margin: 10px;
-    padding: 20px;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 2vh;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-cover {
+    flex: 8; 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: 2vh;
+    border-top-right-radius: 2vh;
+    overflow: hidden;
+}
+
+.card-info {
+    flex: 2;
+    width: 100%;
+    height: 30%;
+    padding: 1vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+
+.card-title {
+    flex: 7;
+    margin: 0;
+    max-height: 3vh;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* 드롭다운 버튼 */
+dropdown {
+    flex: 3;
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    border: 1px solid rgb(37, 37, 37);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    font-weight: 400;
+    color: rgb(37, 37, 37);
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    /*다른 요소들보다 앞에 배치*/
+    font-weight: 400;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    border-radius: 10px;
+}
+
+.dropdown-content a{
+    display : block;
+    text-decoration : none;
+    color : rgb(37, 37, 37);
+    font-size: 12px;
+    padding : 12px 20px;
+  }
+  
+  .dropdown-content a:hover{
+    background-color : #ececec
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+
+  @media screen and (max-width: 770px) {
+    .card-container {
+        justify-content: center;
+    }
 }

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/header.css}" rel="stylesheet" />
     <link th:href="@{/css/home.css}" rel="stylesheet" />
+    <link th:href="@{/css/profileBox.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>나의 프로필</title>
     
@@ -18,18 +19,20 @@
     <!-- 나머지 페이지 내용 -->
     <div class="home_mainbox">
 
-        <div class="profileBox">
+        <div class="proBox">
 
-            <p th:text="|${profile.userid}님|" />
-            <p th:text="|${profile.introduce}님|" />
-
-            <button class="profilebtn">프로필 수정</button>
+            <div th:insert="~{/profileBox::profileBox}"></div>
 
         </div>
 
-        <button class="addbtn">추가</button>
+        <div class="divider"></div>
 
-        <div th:insert="~{/portfolioBox::portfolioBox}" class="portfolioBox"></div>
+        <div class="portbox">
+
+            <div th:insert="~{/portfolioBox::portfolioBox}" class="portfolioBox"></div>
+
+        </div>
+        
 
     </div>
 
