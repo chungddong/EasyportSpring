@@ -1,5 +1,11 @@
+.btnBox {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    
+}
+
 .profilebtn {
-    flex: 1;
     background-color: white;
     border: 1px solid #383838;
     border-radius: 2vh;
@@ -19,7 +25,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center; 
-    padding: 20px;
+    padding: 3vh;
 }
 
 .profile-image {
@@ -40,6 +46,8 @@
     margin-top: 20px;
 }
 
+
+
 @media (min-width: 768px) {
     .profile-container {
         flex-direction: row;
@@ -51,4 +59,6 @@
         margin-left: 20px;
         text-align: left;
     }
+
+    
 }

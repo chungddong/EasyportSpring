@@ -13,10 +13,12 @@
 
 
     <div th:fragment="profileBox"  class="profileBox">
-        <button class="profilebtn">프로필 수정</button>
+        <div class="btnBox">
+            <button class="profilebtn">프로필 수정</button>
+        </div>
         <div class="profile-container" >
             <div class="profile-image">
-                <img src="https://easyportstorage.blob.core.windows.net/defaultimages/test.jpg" alt="프로필 이미지">
+                <img src="" onerror="this.onerror=null; this.src='https://easyportstorage.blob.core.windows.net/defaultimages/noimg.png';">
             </div>
             <div class="profile-info">
                 <h2 th:text="|${profile.userid}의 프로필|" >홍길동</h2>

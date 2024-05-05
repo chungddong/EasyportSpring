@@ -23,7 +23,5 @@ public class Profile {
     private Long id;
     private String userid;
     private String introduce;
-    private String phone;
-    private String email;
     private String imgurl;
 }
