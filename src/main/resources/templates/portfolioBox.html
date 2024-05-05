@@ -20,7 +20,7 @@
         </div>
         
         <div class="card-container">
-            <div class="card-item" th:each="post : ${posts}" id="${post.id}" onclick="onclickCardItem(this.id)">
+            <div class="card-item" th:each="post, postStat : ${posts}" th:id="${postStat.index}" onclick="onclickCardItem(this.id)">
 
                 <div class="card-cover">
                     <img src="https://easyportstorage.blob.core.windows.net/defaultimages/test.jpg" style="width:100%"> 

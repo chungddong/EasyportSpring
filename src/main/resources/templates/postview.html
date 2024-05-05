@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/profileBox.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>나의 프로필</title>
+
+</head>
+
+<body>
+
+
+    <h1>Post View</h1>
+    <p>Post Title: <span th:text="${posts.title}"></span></p>
+    <p>Post Content: <span th:text="${posts.content}"></span></p>
+
+
+
+</body>
+
+
+</html>
