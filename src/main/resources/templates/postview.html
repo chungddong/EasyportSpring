@@ -9,10 +9,14 @@
 
     <style>
         .postViewBox {
+            margin-top: 5vh;
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
+            padding: 10vh;
+            box-sizing: border-box;
         }
     </style>
 
@@ -24,8 +28,7 @@
 
     <div class="postViewBox">
 
-        <h1>Post View</h1>
-        <p>Post Title: <span th:text="${posts.title}"></span></p>
+        <h1 th:text="${posts.title}">title</h1>
         <p>Post Content: <span th:text="${posts.content}"></span></p>
 
 

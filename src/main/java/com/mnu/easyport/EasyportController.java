@@ -113,7 +113,7 @@ public class EasyportController {
         List<Post> posts = postRepository.findByUserid(userid);
         model.addAttribute("posts", posts);
 
-        System.out.println(posts.get(0).getTitle());
+        //System.out.println(posts.get(0).getTitle());
 
         Profile profile = profileRepository.findByUserid(userid);
         model.addAttribute("profile", profile);
