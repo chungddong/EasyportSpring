@@ -32,7 +32,7 @@
     width: 20vh;
     height: 20vh;
     overflow: hidden;
-    border-radius: 50%;
+    border-radius: 4vh;
 }
 
 .profile-image img {

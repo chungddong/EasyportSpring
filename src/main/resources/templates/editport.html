@@ -3,21 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>새 글 작성</title>
+
+    <style>
+
+        html,body{
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .newPostBox 
+        {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .newPostBox form {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .editTitle {
+            width: 100%;
+        }
+        
+        .inputTitle {
+            
+            width: 80%;
+            font-size: 7vh;
+            border-radius: 1vh;
+            border: 1px solid gray;
+        }
+
+
+
+        .editorBox {
+            width: 80%;
+            height: 80%;
+            border: 2px solid gray;
+            border-radius: 1vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .toolBar {
+            background-color: transparent;
+            height: 6vh;
+            color: #868686;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            border-bottom: 2px solid gray;
+        }
+
+        .fontbox {
+            width: 3vh;
+            height: 3vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5vh;
+            cursor: pointer;
+            border: 0px;
+            background-color: transparent;
+        }
+
+        .fontbox:hover {
+            background-color: #C9C9C9;
+        }
+
+        i {
+            margin-left: 0.8vh;
+            margin-right: 0.8vh;
+        }
+
+        .editor {
+            background-color: transparent;
+            height: 90%;
+            padding: 1vh;
+            outline: 0;
+            overflow: auto;
+        }
+
+        .editor img {
+            max-width: 100%;
+            border: 0;
+            resize: both;
+        }
+
+        @media screen and (max-width: 600px) {
+            .editorBox {
+                width: 100%;
+                height: 100%;
+                border-radius: 0vh;
+            }
+        }
+    </style>
 </head>
 <body>
     <div th:insert="~{/header::header}"></div>
 
-    <h1>새 글 작성</h1>
-    <form th:action="@{/savePost}" th:object="${post}" method="post">
-        <label for="title">제목:</label>
-        <input type="text" th:field="*{title}" id="title" required>
-        <br>
-        <label for="content">내용:</label>
-        <textarea th:field="*{content}" id="content" required></textarea>
-        <br>
-        <input type="hidden" th:field="*{userid}" th:value="'특정 이름'">
-        <button type="submit">작성</button>
-    </form>
+    
+
+    <div class="newPostBox">
+        <h1>새 글 작성</h1>
+
+        <form th:action="@{/savePost}" th:object="${post}" method="post">
+
+            <input class="inputTitle" type="text" th:field="*{title}" id="title" required>
+            
+            <label for="content">내용:</label>
+            <textarea th:field="*{content}" id="content" required></textarea>
+            <br>
+            <input type="hidden" th:field="*{userid}" th:value="'특정 이름'">
+
+            <div class="editorBox">
+
+                <div class="toolBar">
+        
+                    <button class="fontbox" onclick="increaseFontSize()">
+                        <i class="fa-solid fa-chevron-up fa-1x"></i>
+                    </button>
+                    <button class="fontbox" onclick="decreaseFontSize()">
+                        <i class="fa-solid fa-chevron-down fa-1x"></i>
+                    </button>
+        
+                    <span class="fontbox">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </span>
+                    <button class="fontbox" id="btnBold">
+                        <i class="fa-solid fa-bold fa-1x"></i>
+                    </button>
+                    <button class="fontbox" id="btnItalic">
+                        <i class="fa-solid fa-italic fa-1x"></i>
+                    </button>
+                    <button class="fontbox" id="btnUnderline">
+                        <i class="fa-solid fa-underline"></i>
+                    </button>
+        
+                    <span class="fontbox">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </span>
+        
+                    <button class="fontbox" id="btnJustify">
+                        <i class="fa-solid fa-align-justify"></i>
+                    </button>
+                    <button class="fontbox" id="btnLeftalign">
+                        <i class="fa-solid fa-align-left"></i>
+                    </button>
+                    <button class="fontbox" id="btnCenteralign">
+                        <i class="fa-solid fa-align-center"></i>
+                    </button>
+                    <button class="fontbox" id="btnRightalign">
+                        <i class="fa-solid fa-align-right"></i>
+                    </button>
+        
+                    <span class="fontbox">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </span>
+        
+                    <button class="fontbox" id="btnList">
+                        <i class="fa-solid fa-list-ul"></i>
+                    </button>
+                    <button class="fontbox" id="btnFill">
+                        <i class="fa-solid fa-fill"></i>
+                    </button>
+                    <button class="fontbox" id="btnImage">
+                        <i class="fa-regular fa-image"></i>
+                    </button>
+        
+        
+                </div>
+        
+                <div class="editor" id="editor" contenteditable="true">
+        
+                    
+        
+                </div>
+        
+        
+            </div>
+
+
+            <button type="submit">작성</button>
+        </form>
+    </div>
+    
 </body>
 </html>
