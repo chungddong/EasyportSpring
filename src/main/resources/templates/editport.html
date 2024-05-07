@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/header.css}" rel="stylesheet" />
@@ -7,16 +8,15 @@
     <title>새 글 작성</title>
 
     <style>
-
-        html,body{
+        html,
+        body {
             width: 100%;
             height: 100%;
             padding: 0;
             margin: 0;
         }
 
-        .newPostBox 
-        {
+        .newPostBox {
             width: 100%;
             height: 100%;
             display: flex;
@@ -36,9 +36,9 @@
         .editTitle {
             width: 100%;
         }
-        
+
         .inputTitle {
-            
+
             width: 80%;
             font-size: 7vh;
             border-radius: 1vh;
@@ -112,10 +112,11 @@
         }
     </style>
 </head>
+
 <body>
     <div th:insert="~{/header::header}"></div>
 
-    
+
 
     <div class="newPostBox">
         <h1>새 글 작성</h1>
@@ -123,83 +124,162 @@
         <form th:action="@{/savePost}" th:object="${post}" method="post">
 
             <input class="inputTitle" type="text" th:field="*{title}" id="title" required>
-            
-            <label for="content">내용:</label>
-            <textarea th:field="*{content}" id="content" required></textarea>
+
+            <input type="hidden" th:field="*{content}" id="content"></input>
             <br>
             <input type="hidden" th:field="*{userid}" th:value="'특정 이름'">
 
-            <div class="editorBox">
 
-                <div class="toolBar">
-        
-                    <button class="fontbox" onclick="increaseFontSize()">
-                        <i class="fa-solid fa-chevron-up fa-1x"></i>
-                    </button>
-                    <button class="fontbox" onclick="decreaseFontSize()">
-                        <i class="fa-solid fa-chevron-down fa-1x"></i>
-                    </button>
-        
-                    <span class="fontbox">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </span>
-                    <button class="fontbox" id="btnBold">
-                        <i class="fa-solid fa-bold fa-1x"></i>
-                    </button>
-                    <button class="fontbox" id="btnItalic">
-                        <i class="fa-solid fa-italic fa-1x"></i>
-                    </button>
-                    <button class="fontbox" id="btnUnderline">
-                        <i class="fa-solid fa-underline"></i>
-                    </button>
-        
-                    <span class="fontbox">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </span>
-        
-                    <button class="fontbox" id="btnJustify">
-                        <i class="fa-solid fa-align-justify"></i>
-                    </button>
-                    <button class="fontbox" id="btnLeftalign">
-                        <i class="fa-solid fa-align-left"></i>
-                    </button>
-                    <button class="fontbox" id="btnCenteralign">
-                        <i class="fa-solid fa-align-center"></i>
-                    </button>
-                    <button class="fontbox" id="btnRightalign">
-                        <i class="fa-solid fa-align-right"></i>
-                    </button>
-        
-                    <span class="fontbox">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </span>
-        
-                    <button class="fontbox" id="btnList">
-                        <i class="fa-solid fa-list-ul"></i>
-                    </button>
-                    <button class="fontbox" id="btnFill">
-                        <i class="fa-solid fa-fill"></i>
-                    </button>
-                    <button class="fontbox" id="btnImage">
-                        <i class="fa-regular fa-image"></i>
-                    </button>
-        
-        
-                </div>
-        
-                <div class="editor" id="editor" contenteditable="true">
-        
-                    
-        
-                </div>
-        
-        
+        </form>
+
+
+        <div class="editorBox">
+
+            <div class="toolBar">
+
+                <button class="fontbox" onclick="increaseFontSize()">
+                    <i class="fa-solid fa-chevron-up fa-1x"></i>
+                </button>
+                <button class="fontbox" onclick="decreaseFontSize()">
+                    <i class="fa-solid fa-chevron-down fa-1x"></i>
+                </button>
+
+                <span class="fontbox">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </span>
+                <button class="fontbox" id="btnBold">
+                    <i class="fa-solid fa-bold fa-1x"></i>
+                </button>
+                <button class="fontbox" id="btnItalic">
+                    <i class="fa-solid fa-italic fa-1x"></i>
+                </button>
+                <button class="fontbox" id="btnUnderline">
+                    <i class="fa-solid fa-underline"></i>
+                </button>
+
+                <span class="fontbox">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </span>
+
+                <button class="fontbox" id="btnJustify">
+                    <i class="fa-solid fa-align-justify"></i>
+                </button>
+                <button class="fontbox" id="btnLeftalign">
+                    <i class="fa-solid fa-align-left"></i>
+                </button>
+                <button class="fontbox" id="btnCenteralign">
+                    <i class="fa-solid fa-align-center"></i>
+                </button>
+                <button class="fontbox" id="btnRightalign">
+                    <i class="fa-solid fa-align-right"></i>
+                </button>
+
+                <span class="fontbox">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </span>
+
+                <button class="fontbox" id="btnList">
+                    <i class="fa-solid fa-list-ul"></i>
+                </button>
+                <button class="fontbox" id="btnFill">
+                    <i class="fa-solid fa-fill"></i>
+                </button>
+                <button class="fontbox" id="btnImage">
+                    <i class="fa-regular fa-image"></i>
+                </button>
+
+
             </div>
 
+            <div class="editor" id="editor" contenteditable="true">
 
-            <button type="submit">작성</button>
-        </form>
+
+
+            </div>
+
+            <button id="submitButton">작성</button>
+
+
+        </div>
+
+
     </div>
-    
+
 </body>
+
+<script>
+
+    const editor = document.getElementById('editor');
+    const btnBold = document.getElementById('btnBold');
+    const btnItalic = document.getElementById('btnItalic');
+    const btnUnderline = document.getElementById('btnUnderline');
+    const btnJustify = document.getElementById('btnJustify');
+    const btnLeftalign = document.getElementById('btnLeftalign');
+    const btnCenteralign = document.getElementById('btnCenteralign');
+
+
+    btnBold.addEventListener('click', function () {
+        setStyle('bold');
+    });
+
+    btnItalic.addEventListener('click', function () {
+        setStyle('italic');
+    });
+
+    btnUnderline.addEventListener('click', function () {
+        setStyle('underline');
+    });
+
+    btnJustify.addEventListener('click', function () {
+        //setStyle('justifyFull ');
+        printEditorHTML();
+    });
+
+    btnLeftalign.addEventListener('click', function () {
+        setStyle('justifyLeft');
+    });
+
+    btnCenteralign.addEventListener('click', function () {
+        setStyle('justifyCenter');
+    });
+
+    // TODO : 지정 안하고 추가해야하는 서식들 추가해야함
+    //깃허브 액션 테스트용
+
+
+    function setStyle(style) {
+        //글씨 스타일 지정함수 style에 넣는 값으로 스타일 지정
+        document.execCommand(style, false, null);
+        editor.focus({ preventScroll: true }); //에디터에 포커스
+    }
+
+    editor.addEventListener('input', printEditorHTML);
+
+    function printEditorHTML() {
+        // 에디터 내용 가져오기]
+        var editorContent = editor.innerHTML;
+        const editorContentInput = document.getElementById('content');
+        editorContentInput.value = editorContent;
+
+
+        // HTML로 변환된 내용 출력 (예를 들어, 콘솔에 로그로 출력)
+        //console.log(editorContent);
+    }
+
+    const form = document.querySelector('form');
+    const submitButton = document.getElementById('submitButton');
+
+    submitButton.addEventListener('click', function () {
+        // 폼 제출 전 작업 (예: 편집기 내용 숨겨진 필드에 복사)
+        const editorContent = document.getElementById('editor').innerHTML;
+        document.getElementById('content').value = editorContent;
+
+        // 폼 제출
+        form.submit();
+    });
+
+
+</script>
+
+
 </html>
