@@ -16,14 +16,14 @@
 
 <body>
     <!-- 다른 내용과 함께 헤더 템플릿 포함 -->
-    <div th:insert="~{/header::header}"></div>
+    <div th:insert="~{header::header}"></div>
 
     <!-- 나머지 페이지 내용 -->
     <div class="home_mainbox">
 
         <div class="proBox">
 
-            <div th:insert="~{/profileBox::profileBox}"></div>
+            <div th:insert="~{profileBox::profileBox}"></div>
 
         </div>
 
@@ -31,7 +31,7 @@
 
         <div class="portbox">
 
-            <div th:insert="~{/portfolioBox::portfolioBox}" class="portfolioBox"></div>
+            <div th:insert="~{portfolioBox::portfolioBox}" class="portfolioBox"></div>
 
         </div>
 
