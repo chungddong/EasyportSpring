@@ -158,6 +158,7 @@ public class EasyportController {
         model.addAttribute("profile", profile);
 
         return "updateProfile"; // home.html을 렌더링
+        //ㄴㅇㄹㄴㅇㄹ
     }
 
     // 프로필 수정 로직
