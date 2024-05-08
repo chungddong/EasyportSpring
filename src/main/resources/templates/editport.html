@@ -26,8 +26,10 @@
         }
 
         .newPostBox form {
+            margin-top: 2vh;
             width: 100%;
-            height: 100%;
+            padding: 3vh;
+            box-sizing: border-box;
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -38,34 +40,35 @@
         }
 
         .inputTitle {
-
-            width: 80%;
-            font-size: 7vh;
+            font-weight: bold;
+            width: 85%;
+            font-size: 6vh;
             border-radius: 1vh;
-            border: 1px solid gray;
+            border: 0px;
         }
 
-
-
-        .editorBox {
-            width: 80%;
-            height: 80%;
-            border: 2px solid gray;
-            border-radius: 1vh;
-            display: flex;
-            flex-direction: column;
-
+        .inputDate {
+            width: 85%;
+            border: 0px;
+            margin-top: 2vh;
         }
 
         .toolBar {
-            background-color: transparent;
+            position: fixed;
+            margin-bottom: 5vh;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
             height: 6vh;
-            color: #868686;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: row;
-            border-bottom: 2px solid gray;
+            border-radius: 1vh;
+            border: 2px solid #969696;
+            color: #868686;
+            z-index: 1;
         }
 
         .fontbox {
@@ -91,8 +94,10 @@
 
         .editor {
             background-color: transparent;
-            height: 90%;
-            padding: 1vh;
+            width: 85%;
+            padding: 3vh;
+            min-height: 60%;
+            box-sizing: border-box;
             outline: 0;
             overflow: auto;
         }
@@ -103,11 +108,36 @@
             resize: both;
         }
 
+        .btnSave {
+            border: 0px;
+            background-color: #3674FB;
+            color: white;
+            border-radius: 1vh;
+            padding-left: 3vh;
+            padding-right: 3vh;
+            height: 70%;
+        }
+
         @media screen and (max-width: 600px) {
             .editorBox {
                 width: 100%;
                 height: 100%;
                 border-radius: 0vh;
+            }
+
+            .inputTitle {
+                
+                width: 99%;
+                font-size: 5vh;
+                border-radius: 1vh;
+            }
+
+            .inputDate {
+                width: 99%;
+            }
+
+            .editor {
+                width: 99%;
             }
         }
     </style>
@@ -119,91 +149,88 @@
 
 
     <div class="newPostBox">
-        <h1>새 글 작성</h1>
 
         <form th:action="@{/savePost}" th:object="${post}" method="post">
 
-            <input class="inputTitle" type="text" th:field="*{title}" id="title" required>
+            <input class="inputTitle" type="text" th:field="*{title}" placeholder="제목을 입력해 주세요." id="title" required>
 
             <input type="hidden" th:field="*{content}" id="content"></input>
-            <br>
-            <input type="hidden" th:field="*{userid}" th:value="'특정 이름'">
 
+            <input class="inputDate" type="text" value="작성일 : 2024-05-08">
+            
+            <input type="hidden" th:field="*{userid}" th:value="'특정 이름'">
 
         </form>
 
+        <div class="editor" id="editor" contenteditable="true">
 
-        <div class="editorBox">
-
-            <div class="toolBar">
-
-                <button class="fontbox" onclick="increaseFontSize()">
-                    <i class="fa-solid fa-chevron-up fa-1x"></i>
-                </button>
-                <button class="fontbox" onclick="decreaseFontSize()">
-                    <i class="fa-solid fa-chevron-down fa-1x"></i>
-                </button>
-
-                <span class="fontbox">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </span>
-                <button class="fontbox" id="btnBold">
-                    <i class="fa-solid fa-bold fa-1x"></i>
-                </button>
-                <button class="fontbox" id="btnItalic">
-                    <i class="fa-solid fa-italic fa-1x"></i>
-                </button>
-                <button class="fontbox" id="btnUnderline">
-                    <i class="fa-solid fa-underline"></i>
-                </button>
-
-                <span class="fontbox">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </span>
-
-                <button class="fontbox" id="btnJustify">
-                    <i class="fa-solid fa-align-justify"></i>
-                </button>
-                <button class="fontbox" id="btnLeftalign">
-                    <i class="fa-solid fa-align-left"></i>
-                </button>
-                <button class="fontbox" id="btnCenteralign">
-                    <i class="fa-solid fa-align-center"></i>
-                </button>
-                <button class="fontbox" id="btnRightalign">
-                    <i class="fa-solid fa-align-right"></i>
-                </button>
-
-                <span class="fontbox">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </span>
-
-                <button class="fontbox" id="btnList">
-                    <i class="fa-solid fa-list-ul"></i>
-                </button>
-                <button class="fontbox" id="btnFill">
-                    <i class="fa-solid fa-fill"></i>
-                </button>
-                <button class="fontbox" id="btnImage">
-                    <i class="fa-regular fa-image"></i>
-                </button>
-
-
-            </div>
-
-            <div class="editor" id="editor" contenteditable="true">
-
-
-
-            </div>
-
-            <button id="submitButton">작성</button>
-
+            여기에 내용을 작성해주세요.
 
         </div>
 
+    </div>
+
+    <div class="toolBar">
+
+        <button class="fontbox" onclick="increaseFontSize()">
+            <i class="fa-solid fa-chevron-up fa-1x"></i>
+        </button>
+        <button class="fontbox" onclick="decreaseFontSize()">
+            <i class="fa-solid fa-chevron-down fa-1x"></i>
+        </button>
+
+        <span class="fontbox">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </span>
+        <button class="fontbox" id="btnBold">
+            <i class="fa-solid fa-bold fa-1x"></i>
+        </button>
+        <button class="fontbox" id="btnItalic">
+            <i class="fa-solid fa-italic fa-1x"></i>
+        </button>
+        <button class="fontbox" id="btnUnderline">
+            <i class="fa-solid fa-underline"></i>
+        </button>
+
+        <span class="fontbox">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </span>
+
+        <button class="fontbox" id="btnJustify">
+            <i class="fa-solid fa-align-justify"></i>
+        </button>
+        <button class="fontbox" id="btnLeftalign">
+            <i class="fa-solid fa-align-left"></i>
+        </button>
+        <button class="fontbox" id="btnCenteralign">
+            <i class="fa-solid fa-align-center"></i>
+        </button>
+        <button class="fontbox" id="btnRightalign">
+            <i class="fa-solid fa-align-right"></i>
+        </button>
+
+        <span class="fontbox">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </span>
+
+        <button class="fontbox" id="btnList">
+            <i class="fa-solid fa-list-ul"></i>
+        </button>
+        <button class="fontbox" id="btnFill">
+            <i class="fa-solid fa-fill"></i>
+        </button>
+        <button class="fontbox" id="btnImage">
+            <i class="fa-regular fa-image"></i>
+        </button>
+
+        <span class="fontbox">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </span>
+
+        <button class="btnSave" id="submitButton">저장</button>
 
     </div>
+
 
 </body>
 
