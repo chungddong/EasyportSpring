@@ -258,6 +258,32 @@ public class EasyportController {
         
         return "redirect:/";
     }
+
+    @PostMapping("/changeUserpwd")
+    public String changeUserpwd(HttpSession session, 
+    @ModelAttribute("prepasswd") String curpwd, 
+    @ModelAttribute("newpasswd") String newpasswd ) {
+        
+        String userid = (String) session.getAttribute("userid");
+        SiteUser currentuser = userRepository.findByUserid(userid);
+        String realpwd = currentuser.getPasswd();
+
+        System.out.println("입력받은 현재 비밀번호 : " + curpwd);
+        System.out.println("진짜 현재 비밀번호  : " + realpwd);
+
+        if(curpwd == realpwd)
+        {
+            currentuser.setPasswd(newpasswd);
+            //userRepository.save(currentuser);
+            //TODO : user레포지터리 jpa 로 바꾸기 위에거 아마 버그 있을듯
+        }
+
+        //TODO : 현재비번과 변경 비번 받아오는 코드 추가
+        
+        return "redirect:/userDetail";
+    }
+
+
         
     
 

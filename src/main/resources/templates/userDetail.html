@@ -164,13 +164,13 @@
 
     <hr />
 
-    <form class="signform" action="#" th:action="@{/siteuser/passwdchange}" th:object="${siteuser}" method="post">
+    <form class="signform" action="/changeUserpwd" method="post">
         <div class="formtitle">비밀번호 변경</div>
         <div class="FormContent">
             <div class="InputContainer">
                 <div class="tiebox">
                     <label for="prepasswd">이전 비밀번호</label>
-                    <input class="InputBox" type="password" name="prepasswd" />
+                    <input class="InputBox"  type="text" name="prepasswd" />
                 </div>
             </div>
             <div class="InputContainer">
