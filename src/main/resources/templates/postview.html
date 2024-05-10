@@ -71,6 +71,21 @@
             background-color: transparent;
             min-height: 80%;
         }
+
+        .btnBack {
+            background-color: #3674FB;
+            color: white;
+            position: relative;
+            top: 8vh;
+            left: -10vh;
+            padding: 2vh 2.3vh;
+            border-radius: 1vh;
+        }
+
+        .btnBack:hover {
+            cursor: pointer;
+            background-color: #8EB2FF;
+        }
     </style>
 
 </head>
@@ -82,6 +97,10 @@
     <div class="postViewBox">
 
         <div class="Content">
+
+            <div class="btnBack">
+                <i class="fa-solid fa-arrow-left fa-1x"></i>
+            </div>
 
             <span class="contentTitle" th:text="${posts.title}">제목이 들어갈 곳입니다.</span>
             <span class="contentDate">작성일 : 2024-04-17 </span>
