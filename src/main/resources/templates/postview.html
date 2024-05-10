@@ -100,7 +100,7 @@
 
         <div class="Content">
 
-            <div class="btnBack">
+            <div class="btnBack" onclick="goBack()">
                 <i class="fa-solid fa-arrow-left fa-1x"></i>
             </div>
 
@@ -131,6 +131,11 @@
     var postNumValue = numInput.value;
 
     window.location.href = '/myboard/change?no=' + postNumValue;
+ }
+
+ function goBack()
+ {
+    window.location.href = '/myboard';
  }
 
 </script>
