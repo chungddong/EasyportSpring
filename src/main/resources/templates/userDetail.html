@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>유저 정보</title>
+
+    <style>
+        /* 중간 가로선 css */
+        hr {
+            width: 58%;
+            height: 2px;
+            background-color: #a0a0a0;
+            border: 0;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            margin-left: 10.5%;
+            margin-right: 10.5%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .unit {
+            margin-left: 10.5%;
+            margin-right: 10.5%;
+            margin-bottom: 7px;
+            background-color: #a0a0a0;
+            border-radius: 10px;
+            padding-top: 7px;
+            /* 위 여백 추가 */
+            padding-bottom: 7px;
+            /* 아래 여백 추가 */
+        }
+
+        .element {
+            margin-left: 10px;
+        }
+
+        .signform {
+            margin-left: 25%;
+        }
+
+        .formtitle {
+            font-size: 4vh;
+            font-weight: bold;
+            margin-bottom: 15px;
+            margin-top: 15px;
+        }
+
+        .BtnLogin {
+            background-color: #3674FB;
+            border: 0px;
+            border-radius: 1vh;
+            color: white;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 80px;
+            height: 30px;
+            font-weight: 100;
+            font-size: 2vh;
+        }
+
+        .InputBox {
+            width: 35vh;
+            height: 5vh;
+            margin-top: 2vh;
+            margin-bottom: 10px;
+            font-size: 20px;
+            padding-left: 5px;
+            border: 2px solid;
+            border-color: gray;
+            border-radius: 1vh;
+            font-size: 2vh;
+            background-color: #EFEFEF;
+        }
+
+        .InputContainer {
+            display: flex;
+            flex-direction: row;
+            /* 요소들을 세로 방향으로 배치 */
+            margin-bottom: 10px;
+        }
+
+        .InputContainer label {
+            margin-bottom: 5px;
+            /* label과 input 사이의 간격 조정 */
+        }
+
+        .InputContainer input {
+            width: 35vh;
+            height: 5vh;
+            margin-top: 2vh;
+            margin-bottom: 10px;
+            font-size: 20px;
+            padding-left: 5px;
+            border: 2px solid;
+            border-color: gray;
+            border-radius: 1vh;
+            font-size: 2vh;
+            background-color: #EFEFEF;
+        }
+
+        .deleteBtn {
+            background-color: red;
+            border: 0px;
+            border-radius: 1vh;
+            color: white;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 100px;
+            height: 30px;
+            font-weight: 100;
+            font-size: 2vh;
+        }
+
+        .tiebox {
+            display: flex;
+            flex-direction: column;
+            margin-right: 8vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div th:insert="~{header::header}"></div>
+
+    <form class="signform" action="/updateUsers" th:object="${user}" method="post">
+        <div class="formtitle">계정 설정</div>
+        <div class="FormContent">
+            <div class="InputContainer">
+                <div class="tiebox">    
+                    <label for="newname">사용자 이름</label>
+                    <input class="InputBox" th:field="*{name}" value="${user.name}" type="text" name="newname" />
+                </div>
+                <div class="tiebox">
+                    <label for="newuserid">유저 아이디</label>
+                    <input class="InputBox" th:field="*{userid}" value="${user.userid}" type="text" name="newuserid" />
+                </div>
+            </div>
+            <div class="InputContainer">
+                <div class="tiebox" style="width: 55%;">
+                    <label for="newemail">사용자 이메일</label>
+                    <input class="InputBox" th:field="*{email}" value="${user.email}" type="email" name="newemail" style="width: 100%;" />
+                </div>
+            </div>
+            <input class="BtnLogin" type="submit" value="저장" />
+        </div>
+    </form>
+    <form class="signform" action="/deleteUser" method="post">
+        <input type="hidden" name="userid" />
+        <input class="deleteBtn" type="submit" value="계정삭제" />
+    </form>
+
+    <hr />
+
+    <form class="signform" action="#" th:action="@{/siteuser/passwdchange}" th:object="${siteuser}" method="post">
+        <div class="formtitle">비밀번호 변경</div>
+        <div class="FormContent">
+            <div class="InputContainer">
+                <div class="tiebox">
+                    <label for="prepasswd">이전 비밀번호</label>
+                    <input class="InputBox" type="password" name="prepasswd" />
+                </div>
+            </div>
+            <div class="InputContainer">
+                <div class="tiebox">
+                    <label for="newpasswd">변경 비밀번호</label>
+                    <input class="InputBox" type="password" name="newpasswd" />
+                </div>
+                <div class="tiebox">
+                    <label for="newpasswd_confirm">비밀번호 확인</label>
+                <input class="InputBox" type="password" name="newpasswd_confirm" />
+                </div>
+            </div>
+            <input class="BtnLogin" type="submit" value="변경" />
+        </div>
+    </form>
+
+    <hr />
+
+</body>
+
+</html>
+
+<script>
+
+</script>

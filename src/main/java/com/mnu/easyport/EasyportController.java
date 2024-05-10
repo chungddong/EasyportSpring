@@ -233,6 +233,34 @@ public class EasyportController {
         return "changeport"; // 해당 데이터를 보여줄 뷰의 이름 리턴
     }
 
+    @GetMapping("/userDetail") //유저 버튼 클릭시
+    public String showUserDetail(HttpSession session, Model model) {
+
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null) {
+            return "redirect:/"; // 로그인 정보가 없으면 로그인 화면으로 이동
+        }
+
+        SiteUser user = userRepository.findByUserid(userid);
+        model.addAttribute("user", user);
+
+        return "userDetail";
+
+    }
+
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(HttpSession session, @ModelAttribute("profile") Profile profile) {
+        String userid = (String) session.getAttribute("userid");
+        // TODO : suerid 로 post 및 다른 기타정보 삭제먼저하게 처리
+        Profile currentProfile = profileRepository.findByUserid(userid);
+        profileRepository.deleteById(currentProfile.getId());
+        
+        return "redirect:/";
+    }
+        
+    
+
     
 
 
