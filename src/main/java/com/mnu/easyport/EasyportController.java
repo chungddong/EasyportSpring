@@ -146,6 +146,29 @@ public class EasyportController {
         return "redirect:/myboard";
     }
 
+    @PostMapping("/updatePost")
+    public String postMethodName(HttpSession session, @ModelAttribute("post") Post post) {
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null) {
+            return "redirect:/"; // 로그인 정보가 없으면 로그인 화면으로 이동
+        }
+
+        long postid = post.getId();
+        int postnum = (int) postid;
+        
+        List<Post> posts = postRepository.findByUserid(userid);
+        Post findPosts = posts.get(postnum);
+
+        Long id = findPosts.getId();
+
+        post.setId(id);
+        post.setUserid(userid);
+        postRepository.save(post);
+
+        return "redirect:/myboard";
+    }
+    
+
     // 프로필 업데이트 창 이동
     @GetMapping("/updateProfile")
     public String profilePage(HttpSession session, Model model) {
@@ -184,9 +207,38 @@ public class EasyportController {
         Post findPosts = posts.get(itemIndex);
 
         model.addAttribute("posts", findPosts);
+        model.addAttribute("postNum", itemIndex);
 
         return "postview"; // 해당 데이터를 보여줄 뷰의 이름 리턴
     }
+
+
+    @GetMapping("/myboard/change")
+    public String showChangePost(HttpSession session, @RequestParam("no") int itemIndex, Model model) {
+        
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null) {
+            return "redirect:/"; // 로그인 정보가 없으면 로그인 화면으로 이동
+        }
+
+        List<Post> post = postRepository.findByUserid(userid);
+        Post findPosts = post.get(itemIndex);
+
+        Long index = (long) itemIndex;
+
+        findPosts.setId(index);
+        model.addAttribute("post", findPosts);
+
+
+        return "changeport"; // 해당 데이터를 보여줄 뷰의 이름 리턴
+    }
+
+    
+
+
+   
+
+
 
     
 

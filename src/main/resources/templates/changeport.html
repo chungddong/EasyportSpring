@@ -151,19 +151,21 @@
 
     <div class="newPostBox">
 
-        <form th:action="@{/savePost}" th:object="${post}" method="post">
+        <form th:action="@{/updatePost}" th:object="${post}" method="post">
 
-            <input class="inputTitle" type="text" th:field="*{title}" placeholder="제목을 입력해 주세요." id="title" required>
+            <input class="inputTitle" value="${post.title}" th:field="*{title}" placeholder="제목을 입력해 주세요." id="title" required>
 
             <input type="hidden" th:field="*{content}" id="content"></input>
 
+            <input type="hidden" th:field="*{id}"></input>
+
             <input class="inputDate" type="text" value="작성일 : 2024-05-08">
             
-            <input type="hidden" th:field="*{userid}" th:value="'특정 이름'">
+            <input type="hidden" th:field="*{userid}" value="${post.userid}" th:value="'특정 이름'">
 
         </form>
 
-        <div class="editor" id="editor" contenteditable="true">
+        <div class="editor" id="editor" contenteditable="true" th:utext="${post.content}">
 
             여기에 내용을 작성해주세요.
 
