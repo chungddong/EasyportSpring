@@ -4,7 +4,10 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.models.BlobContainerItem;
+import com.azure.storage.blob.models.BlobContainerProperties;
+import com.azure.storage.blob.models.BlobServiceProperties;
 import com.azure.storage.blob.models.ListBlobContainersOptions;
+import com.azure.storage.blob.models.PublicAccessType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
+
+
 
 @Service
 public class AzureBlobService {
@@ -22,7 +27,15 @@ public class AzureBlobService {
     // storage내에 새로운 blob 컨테이너를 생성하는 메서드
     // private 스토리지에는 업로드는 되지만 받아올수는 없음
     public void createContainer(String containerName) {
+
+        
+        BlobContainerProperties properties;
+        PublicAccessType type = PublicAccessType.BLOB;
+        properties = new BlobContainerProperties(null, containerName, null, null, null, null, type, false, false);
+        //blobServiceClient.setProperties(properties);
         blobServiceClient.createBlobContainer(containerName);
+        BlobContainerClient client;
+        //client.
     }
 
     // storage내에 있는 blob 컨테이너를 삭제하는 메서드 [계정 삭제시]
