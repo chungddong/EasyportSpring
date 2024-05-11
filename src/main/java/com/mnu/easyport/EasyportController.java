@@ -103,6 +103,19 @@ public class EasyportController {
         return "redirect:/upload?success";
     }
 
+    @PostMapping("/uploadProfileImg")
+    public String uploadProfileImg(HttpSession session, @RequestParam("file") MultipartFile file) throws IOException {
+        
+        String userid = (String) session.getAttribute("userid");
+
+        String containerName = userid;
+        azureBlobService.uploadBlobFromFile(containerName, userid + "_profile.png", file.getInputStream());
+
+        return "redirect:/";
+    }
+
+    
+
     @GetMapping("/myboard")
     public String showHomePage(HttpSession session, Model model) {
         String userid = (String) session.getAttribute("userid");

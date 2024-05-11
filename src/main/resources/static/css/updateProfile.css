@@ -1,0 +1,109 @@
+.container {
+    display: flex;
+    align-items: center;
+    position: relative; /* 부모 컨테이너를 relative로 설정 */
+}
+
+.rounded-box {
+    width: 200px;
+    height: 200px;
+    background-color: #f0f0f0;
+    border-radius: 20px; /* 코너의 둥글기 정도를 조절합니다. */
+    border: 2px solid #ccc; /* 테두리를 만듭니다. */
+    margin-right: 40px;
+    margin-bottom: 30px;
+}
+
+/* 사용자 정의 input file 버튼 스타일 */
+#customFileContainer {
+    display: flex;
+    align-items: center;
+    position: relative; /* 컨테이너를 relative로 설정 */
+}
+
+#customFile {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#profileText { /*프로필 공개 여부*/
+    font-size: 16px;
+    position: absolute;
+    top: 13%; /* 원하는 위치의 상하 조절 */
+    right: 52%; /* 원하는 위치의 좌우 조절 */
+}
+
+#deleteButton {/*삭제 버튼*/
+    background-color: #dc3545;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* 숨겨진 input file 요소 스타일 */
+#imageInput {
+    display: none;
+}
+
+/* 라디오 버튼 스타일 */
+#radioButtons {
+    position: absolute;
+    top: 30%; /* 프로필 공개 여부 문구 아래로 위치 조정 */
+    right: 50%; /* 원하는 위치의 좌우 조절 */
+}
+
+#radioButtons label {
+    margin-right: 10px;
+}
+/*<!-- 새롭게 만드곳 ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ -->*/
+
+.profile-form {
+    /*margin: 0 auto;*/
+    margin-left: 30%;
+    margin-top: 3%;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+.profile-form input[type="text"],
+.profile-form input[type="email"]
+{
+    width: calc(20%);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+.profile-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.profile-form button.primary{
+    background-color: #007bff;
+    color: #fff;
+}
+.button-container {
+    position: relative;
+    text-align: right;
+    margin-bottom: 10px;
+}
+.button-container {
+    position: absolute; /* 혹은 fixed */
+    top: 20px; /* 원하는 위치로 조정 */
+    right: 20px; /* 원하는 위치로 조정 */
+}
+#bio{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}

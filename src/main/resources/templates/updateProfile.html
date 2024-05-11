@@ -1,32 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/header.css}" rel="stylesheet"/>
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/updateProfile.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>프로필 수정</title>
 </head>
+
 <body>
 
     <div th:insert="~{header::header}"></div>
 
+    <div class="profile-form">
+        <div class="container">
+            <div class="rounded-box" id="imageContainer"></div>
+            <div id="customFileContainer">
+                <!-- 사용자 정의 input file 버튼 -->
+                <form th:action="@{/uploadProfileImg}" method="post" enctype="multipart/form-data" id="uploadForm">
 
-    <h1>프로필 수정</h1>
-    <form action="/updateProfile" method="post" th:object="${profile}">
-        <label for="phone">Email:</label>
-        <input type="email" th:field="*{email}" value="${profile.email}">
-        <br>
-        <label for="phone">Phone Number:</label>
-        <input type="text" maxlength="13" th:field="*{phone}" value="${profile.phone}">
-        <br>
-        <label for="introduce">introduce:</label>
-        <textarea id="bio" th:field="*{introduce}" rows="4" cols="50" th:text="${profile.introduce}"></textarea>
-        <br>
-        <button type="submit">Update</button>
-    </form>
+                    <input type="file" name="file" id="imageInput" accept="image/*" required>
+                    <button type="button" onclick="triggerUpload()">업로드</button>
+
+                </form>
+
+
+            </div>
+            <!-- 프로필 공개여부 문구 -->
+            <div id="profileText">프로필 공개여부</div>
+            <!-- 라디오 버튼 -->
+            <div id="radioButtons">
+                <label><input type="radio" name="visibility" value="public"> 공개</label>
+                <label><input type="radio" name="visibility" value="private"> 비공개</label>
+            </div>
+        </div>
+
+        <form action="/updateProfile" method="post" th:object="${profile}">
+            <label for="phone">연락처</label><br>
+            <input type="text" maxlength="13" th:field="*{phone}" oninput="autoHyphen(this)"
+                value="${profile.phone}"><br>
+
+            <label for="Email">연락 이메일</label><br>
+            <input type="email" th:field="*{email}" value="${profile.email}"><br>
+
+            <label for="introduce">자기소개</label><br>
+            <textarea id="bio" th:field="*{introduce}" rows="4" cols="50" th:text="${profile.introduce}"
+                style="resize: none;"></textarea><br>
+
+            <button type="submit" class="primary">저장</button>
+            <button type="reset" onclick="location.href='/'">취소</button><br>
+        </form>
+    </div>
+
+
+
 </body>
-</html>
 
 <script>
-
+    function triggerUpload() {
+        const fileInput = document.getElementById('imageInput');
+        fileInput.click();
+        fileInput.addEventListener('change', function () {
+            if (fileInput.files.length > 0) {
+                document.getElementById('uploadForm').submit();
+            }
+        });
+    }
 </script>
+
+</html>
