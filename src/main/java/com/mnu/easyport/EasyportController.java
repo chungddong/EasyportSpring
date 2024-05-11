@@ -58,7 +58,11 @@ public class EasyportController {
         profile.setIntroduce("");
         profileRepository.save(profile);
 
-        model.addAttribute("name", user.getName());
+        String userName = user.getName();
+
+        azureBlobService.createContainer(userName);
+
+        model.addAttribute("name", userName);
         return "signup_done";
     }
 
