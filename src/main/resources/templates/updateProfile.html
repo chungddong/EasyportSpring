@@ -15,7 +15,11 @@
 
     <div class="profile-form">
         <div class="container">
-            <div class="rounded-box" id="imageContainer"></div>
+            <div class="rounded-box" id="imageContainer">
+
+                <img src="https://easyportstorage.blob.core.windows.net/test/test_profile.png" onerror="this.onerror=null; this.src='https://easyportstorage.blob.core.windows.net/defaultimages/noimg.png';" height="100%" width="100%" style="object-fit: cover; border-radius: 3vh;">
+
+            </div>
             <div id="customFileContainer">
                 <!-- 사용자 정의 input file 버튼 -->
                 <form th:action="@{/uploadProfileImg}" method="post" enctype="multipart/form-data" id="uploadForm">

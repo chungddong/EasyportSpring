@@ -111,7 +111,7 @@ public class EasyportController {
         String containerName = userid;
         azureBlobService.uploadBlobFromFile(containerName, userid + "_profile.png", file.getInputStream());
 
-        return "redirect:/";
+        return "redirect:/updateProfile";
     }
 
     
