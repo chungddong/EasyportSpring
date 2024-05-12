@@ -17,7 +17,9 @@
         <div class="container">
             <div class="rounded-box" id="imageContainer">
 
-                <img th:src="${imgurl}" onerror="this.onerror=null; this.src='https://easyportstorage.blob.core.windows.net/defaultimages/noimg.png';" height="100%" width="100%" style="object-fit: cover; border-radius: 3vh;">
+                <img th:src="${imgurl}"
+                    onerror="this.onerror=null; this.src='https://easyportstorage.blob.core.windows.net/defaultimages/noimg.png';"
+                    height="100%" width="100%" style="object-fit: cover; border-radius: 3vh;">
 
             </div>
             <div id="customFileContainer">
@@ -31,13 +33,7 @@
 
 
             </div>
-            <!-- 프로필 공개여부 문구 -->
-            <div id="profileText">프로필 공개여부</div>
-            <!-- 라디오 버튼 -->
-            <div id="radioButtons">
-                <label><input type="radio" name="visibility" value="public"> 공개</label>
-                <label><input type="radio" name="visibility" value="private"> 비공개</label>
-            </div>
+            
         </div>
 
         <form action="/updateProfile" method="post" th:object="${profile}">
@@ -52,10 +48,21 @@
             <textarea id="bio" th:field="*{introduce}" rows="4" cols="50" th:text="${profile.introduce}"
                 style="resize: none;"></textarea><br>
 
-            <button type="submit" class="primary">저장</button>
-            <button type="reset" onclick="location.href='/'">취소</button><br>
+                <label>프로필 공개 여부:</label><br>
+                <label><input type="radio" id="isAccessRadio" th:field="*{canview}" th:value="true" th:checked="${profile.canview}" onclick="showbtn()"> 공개</label><br>
+                <label><input type="radio" th:field="*{canview}" th:value="false" th:checked="${!profile.canview}" onclick="hidebtn()"> 비공개</label><br>
+            
+                <button id="copyButton" type="button" onclick="copyTextToClipboard()">링크 복사</button><br>
+
+
+                <input type="hidden" id="viewkey" th:field="*{viewkey}" th:value="${profile.viewkey}" >
+
+            <button type="submit" class="primary" style="margin: 1vh;">저장</button>
+            <button type="reset" onclick="location.href='/myboard'">취소</button><br>
         </form>
     </div>
+
+    
 
 
 
@@ -71,6 +78,47 @@
             }
         });
     }
+
+    var copyButton = document.getElementById('copyButton');
+
+    window.onload = function() {
+        var copyButton = document.getElementById('copyButton');
+        if (isAccessRadio.checked) {
+            copyButton.style.display = 'block'; // 선택되면 버튼 표시
+        } else {
+            copyButton.style.display = 'none'; // 선택 해제되면 버튼 숨김
+        }
+    };
+
+    function hidebtn()
+    {
+        console.log('버튼숨기기');
+        copyButton.style.display = 'none';
+    }
+
+    function showbtn()
+    {
+        console.log('버튼보이기');
+        copyButton.style.display = 'block';
+    }
+    
+
+
+    function copyTextToClipboard() {
+        var viewkeys = document.getElementById('viewkey').value;
+        var url = "https://easyportfolio.azurewebsites.net/publicView?code=" + viewkeys;
+        // 클립보드에 복사하기
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                alert('공유링크가 클립보드에 복사되었습니다.');
+            })
+            .catch((error) => {
+                console.error('공유링크 복사 중 오류 발생:', error);
+                alert('공유링크 복사 중 오류가 발생했습니다.');
+            });
+    }
+
+    
 </script>
 
 </html>

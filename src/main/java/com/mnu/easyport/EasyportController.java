@@ -24,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.persistence.Entity;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Random;
+
 @Controller
 public class EasyportController {
 
@@ -39,6 +41,8 @@ public class EasyportController {
     @Autowired
     private ProfileRepository profileRepository;
 
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
     @GetMapping(path = "/")
     public String mains(Model model) {
         model.addAttribute("siteuser", new SiteUser());
@@ -50,12 +54,18 @@ public class EasyportController {
     // ===============================================================================================================================
 
     @PostMapping(path = "/signup")
-    public String signup(@ModelAttribute SiteUser user, Model model) {
+    public String signup(@ModelAttribute("siteuser") SiteUser user, Model model) {
 
         userRepository.save(user);
+
         Profile profile = new Profile();
         profile.setUserid(user.getUserid());
+        profile.setEmail(user.getEmail());
         profile.setIntroduce("");
+        profile.setCanview(false);
+
+        String rankey = generateRandomKey();
+        profile.setViewkey(rankey);
         profileRepository.save(profile);
 
         String userName = user.getName();
@@ -64,6 +74,17 @@ public class EasyportController {
 
         model.addAttribute("name", userName);
         return "signup_done";
+    }
+
+    // 랜덤키 생성 코드
+    public static String generateRandomKey() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(5);
+        for (int i = 0; i < 5; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            sb.append(CHARACTERS.charAt(randomIndex));
+        }
+        return sb.toString();
     }
 
     // 로그인 요청 시
@@ -109,7 +130,7 @@ public class EasyportController {
 
     @PostMapping("/uploadProfileImg")
     public String uploadProfileImg(HttpSession session, @RequestParam("file") MultipartFile file) throws IOException {
-        
+
         String userid = (String) session.getAttribute("userid");
 
         String containerName = userid;
@@ -117,8 +138,6 @@ public class EasyportController {
 
         return "redirect:/updateProfile";
     }
-
-    
 
     @GetMapping("/myboard")
     public String showHomePage(HttpSession session, Model model) {
@@ -130,15 +149,15 @@ public class EasyportController {
         List<Post> posts = postRepository.findByUserid(userid);
         model.addAttribute("posts", posts);
 
-        //System.out.println(posts.get(0).getTitle());
+        // System.out.println(posts.get(0).getTitle());
 
         Profile profile = profileRepository.findByUserid(userid);
         model.addAttribute("profile", profile);
 
-        String imgurl = "https://easyportstorage.blob.core.windows.net/"+ userid + "/" + userid + "_profile.png";
+        String imgurl = "https://easyportstorage.blob.core.windows.net/" + userid + "/" + userid + "_profile.png";
 
         model.addAttribute("imgurl", imgurl);
-        
+
         return "myboard";
     }
 
@@ -177,7 +196,7 @@ public class EasyportController {
 
         long postid = post.getId();
         int postnum = (int) postid;
-        
+
         List<Post> posts = postRepository.findByUserid(userid);
         Post findPosts = posts.get(postnum);
 
@@ -189,7 +208,6 @@ public class EasyportController {
 
         return "redirect:/myboard";
     }
-    
 
     // 프로필 업데이트 창 이동
     @GetMapping("/updateProfile")
@@ -200,20 +218,23 @@ public class EasyportController {
         }
 
         Profile profile = profileRepository.findByUserid(userid);
+
         model.addAttribute("profile", profile);
-        
-        String imgurl = "https://easyportstorage.blob.core.windows.net/"+ userid + "/" + userid + "_profile.png";
+
+        String imgurl = "https://easyportstorage.blob.core.windows.net/" + userid + "/" + userid + "_profile.png";
 
         model.addAttribute("imgurl", imgurl);
 
         return "updateProfile"; // home.html을 렌더링
-        //ㄴㅇㄹㄴㅇㄹ
+        // ㄴㅇㄹㄴㅇㄹ
     }
 
     // 프로필 수정 로직
     @PostMapping("/updateProfile")
     public String updateProfile(HttpSession session, @ModelAttribute("profile") Profile profile) {
         String userid = (String) session.getAttribute("userid");
+
+        System.err.println("출력해야할거 : " + profile.getCanview());
         Long id = profileRepository.findByUserid(userid).getId();
         profile.setId(id);
         profile.setUserid(userid);
@@ -223,7 +244,7 @@ public class EasyportController {
 
     @GetMapping("/myboard/view")
     public String showItemDetails(HttpSession session, @RequestParam("no") int itemIndex, Model model) {
-        
+
         String userid = (String) session.getAttribute("userid");
         if (userid == null) {
             return "redirect:/"; // 로그인 정보가 없으면 로그인 화면으로 이동
@@ -238,10 +259,56 @@ public class EasyportController {
         return "postview"; // 해당 데이터를 보여줄 뷰의 이름 리턴
     }
 
+    @GetMapping("/publicView")
+    public String publicboardView(@RequestParam("code") String code, Model model) {
+
+        Profile publicuser = profileRepository.findByViewkey(code);
+
+        if (publicuser.getCanview() == true) {
+            String userid = publicuser.getUserid();
+
+            List<Post> posts = postRepository.findByUserid(userid);
+            model.addAttribute("posts", posts);
+
+            // System.out.println(posts.get(0).getTitle());
+
+            Profile profile = profileRepository.findByUserid(userid);
+            model.addAttribute("profile", profile);
+
+            String imgurl = "https://easyportstorage.blob.core.windows.net/" + userid + "/" + userid + "_profile.png";
+
+            model.addAttribute("imgurl", imgurl);
+
+            return "publicboard";
+        } else {
+            return "공개되어 있지 않습니다";
+        }
+
+    }
+
+    @GetMapping("/publicpost")
+    public String showpublicItemDetails(@RequestParam("code") String code,
+    @RequestParam("no") int itemIndex,
+    Model model) {
+
+        System.out.println("받은거 확인 : " + code + "," + itemIndex);
+
+        Profile publicuser = profileRepository.findByViewkey(code);
+        String userid = publicuser.getUserid();
+
+        List<Post> posts = postRepository.findByUserid(userid);
+        model.addAttribute("posts", posts);
+        Post findPosts = posts.get(itemIndex);
+
+        model.addAttribute("posts", findPosts);
+        model.addAttribute("postNum", itemIndex);
+
+        return "publicpostview"; // 해당 데이터를 보여줄 뷰의 이름 리턴
+    }
 
     @GetMapping("/myboard/change")
     public String showChangePost(HttpSession session, @RequestParam("no") int itemIndex, Model model) {
-        
+
         String userid = (String) session.getAttribute("userid");
         if (userid == null) {
             return "redirect:/"; // 로그인 정보가 없으면 로그인 화면으로 이동
@@ -255,11 +322,10 @@ public class EasyportController {
         findPosts.setId(index);
         model.addAttribute("post", findPosts);
 
-
         return "changeport"; // 해당 데이터를 보여줄 뷰의 이름 리턴
     }
 
-    @GetMapping("/userDetail") //유저 버튼 클릭시
+    @GetMapping("/userDetail") // 유저 버튼 클릭시
     public String showUserDetail(HttpSession session, Model model) {
 
         String userid = (String) session.getAttribute("userid");
@@ -274,22 +340,21 @@ public class EasyportController {
 
     }
 
-
     @PostMapping("/deleteUser")
     public String deleteUser(HttpSession session, @ModelAttribute("profile") Profile profile) {
         String userid = (String) session.getAttribute("userid");
         // TODO : suerid 로 post 및 다른 기타정보 삭제먼저하게 처리
         Profile currentProfile = profileRepository.findByUserid(userid);
         profileRepository.deleteById(currentProfile.getId());
-        
+
         return "redirect:/";
     }
 
     @PostMapping("/changeUserpwd")
-    public String changeUserpwd(HttpSession session, 
-    @ModelAttribute("prepasswd") String curpwd, 
-    @ModelAttribute("newpasswd") String newpasswd ) {
-        
+    public String changeUserpwd(HttpSession session,
+            @ModelAttribute("prepasswd") String curpwd,
+            @ModelAttribute("newpasswd") String newpasswd) {
+
         String userid = (String) session.getAttribute("userid");
         SiteUser currentuser = userRepository.findByUserid(userid);
         String realpwd = currentuser.getPasswd();
@@ -297,29 +362,15 @@ public class EasyportController {
         System.out.println("입력받은 현재 비밀번호 : " + curpwd);
         System.out.println("진짜 현재 비밀번호  : " + realpwd);
 
-        if(curpwd == realpwd)
-        {
+        if (curpwd == realpwd) {
             currentuser.setPasswd(newpasswd);
-            //userRepository.save(currentuser);
-            //TODO : user레포지터리 jpa 로 바꾸기 위에거 아마 버그 있을듯
+            // userRepository.save(currentuser);
+            // TODO : user레포지터리 jpa 로 바꾸기 위에거 아마 버그 있을듯
         }
 
-        //TODO : 현재비번과 변경 비번 받아오는 코드 추가
-        
+        // TODO : 현재비번과 변경 비번 받아오는 코드 추가
+
         return "redirect:/userDetail";
     }
-
-
-        
-    
-
-    
-
-
-   
-
-
-
-    
 
 }

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/home.css}" rel="stylesheet" />
+    <link th:href="@{/css/profileBox.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>나의 프로필</title>
+
+
+</head>
+
+<body>
+    <!-- 다른 내용과 함께 헤더 템플릿 포함 -->
+    <div th:fragment="header" class="header">
+
+        <div class="top">
+
+            <div class="logo" onclick="location.href='/'">
+
+                <img src="https://easyportstorage.blob.core.windows.net/defaultimages/icon_black.png" />
+
+            </div>
+        </div>
+
+        <div class="bottom">
+
+        </div>
+
+
+    </div>
+
+    <!-- 나머지 페이지 내용 -->
+    <div class="home_mainbox">
+
+        <div class="proBox">
+
+            <div class="profileBox">
+                <div class="profile-container">
+                    <div class="profile-image">
+                        <img th:src="${imgurl}"
+                            onerror="this.onerror=null; this.src='https://easyportstorage.blob.core.windows.net/defaultimages/noimg.png';">
+                    </div>
+                    <div class="profile-info">
+                        <h2 th:text="|${profile.userid}의 프로필|">홍길동</h2>
+                        <p th:text="|${profile.introduce}|">안녕하세요! 저는 웹 개발자입니다. HTML, CSS, JavaScript를 주로 다룹니다.</p>
+                    </div>
+                    <input type="hidden" id="viewkey" th:value="${profile.viewkey}">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="divider"></div>
+        
+
+        <div class="portbox">
+
+            <div class="portfolioBox">
+
+                <div class="titleBox">
+                    <div class="protfolioTitle">포트폴리오 목록</div>
+                </div>
+
+                <div class="card-container">
+                    <div class="card-item" th:each="post, postStat : ${posts}" th:id="${postStat.index}"
+                        onclick="onclickCardItem(this.id)">
+
+                        <div class="card-cover">
+                            <img src="https://easyportstorage.blob.core.windows.net/defaultimages/test.jpg"
+                                style="width:100%">
+                        </div>
+
+                        <div class="card-info">
+                            <p class="card-title" th:text="${post.title}">타이틀</p>
+                            <div class="dropdown">
+                                <button class="dropbtn">
+                                    <span>···</span>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">수정</a>
+                                    <a href="#">삭제</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+<script>
+
+
+    var viewkeys = document.getElementById('viewkey').value;
+
+    function onclickCardItem(itemindex) {
+        window.location.href = '/publicpost?code=' +  viewkeys + "&no=" + itemindex;
+        ///myboard/view?no=' + itemindex;
+    }
+
+
+
+
+</script>
+
+
+</html>

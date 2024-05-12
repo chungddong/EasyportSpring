@@ -25,6 +25,4 @@ public class SiteUser {
     private String name;
     private String passwd;
     private String userid;
-
-
 }

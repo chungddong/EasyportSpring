@@ -26,4 +26,7 @@ public class Profile {
     private String phone;
     private String email;
     private String imgurl;
+    private Boolean canview;
+    private String viewkey;
+
 }
