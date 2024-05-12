@@ -18,7 +18,7 @@
         </div>
         <div class="profile-container" >
             <div class="profile-image">
-                <img src="https://easyportstorage.blob.core.windows.net/test/test_profile.png" onerror="this.onerror=null; this.src='https://easyportstorage.blob.core.windows.net/defaultimages/noimg.png';">
+                <img th:src="${imgurl}" onerror="this.onerror=null; this.src='https://easyportstorage.blob.core.windows.net/defaultimages/noimg.png';">
             </div>
             <div class="profile-info">
                 <h2 th:text="|${profile.userid}의 프로필|" >홍길동</h2>

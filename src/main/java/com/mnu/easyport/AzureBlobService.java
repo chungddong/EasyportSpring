@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 
-
-
 @Service
 public class AzureBlobService {
 
@@ -29,14 +27,16 @@ public class AzureBlobService {
     public void createContainer(String containerName) {
 
         
+
+        BlobContainerClient containerClient = blobServiceClient.createBlobContainer(containerName);
+
+        // 컨테이너 속성 설정
         BlobContainerProperties properties;
         PublicAccessType type = PublicAccessType.BLOB;
         properties = new BlobContainerProperties(null, containerName, null, null, null, null, type, false, false);
-        //blobServiceClient.setProperties(properties);
-        blobServiceClient.createBlobContainer(containerName);
-        BlobContainerClient client;
-        //client.
+        containerClient.setAccessPolicy(type, null);
     }
+    
 
     // storage내에 있는 blob 컨테이너를 삭제하는 메서드 [계정 삭제시]
     public void deleteContainer(String containerName) {
@@ -56,11 +56,11 @@ public class AzureBlobService {
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //containerName의 blob스토리지에 blobName을 가진 파일을 업로드 파일은 filestream으로 받음
-    public void uploadBlobFromFile(String containerName, String blobName, InputStream filestream) throws IOException{
+    // containerName의 blob스토리지에 blobName을 가진 파일을 업로드 파일은 filestream으로 받음
+    public void uploadBlobFromFile(String containerName, String blobName, InputStream filestream) throws IOException {
         BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
         BlobClient blobClient = containerClient.getBlobClient(blobName);
 
@@ -71,14 +71,14 @@ public class AzureBlobService {
         }
     }
 
-    //containerName의 blob스토리지에 blobName을 가진 파일을 삭제하기
-    //TODO : https://learn.microsoft.com/ko-kr/azure/storage/blobs/storage-blob-delete-java 링크 참조해서 파일 있는지 확인해서 삭제하게
-    public void uploadBlobFromFile(String containerName, String blobName)
-    {
+    // containerName의 blob스토리지에 blobName을 가진 파일을 삭제하기
+    // TODO :
+    // https://learn.microsoft.com/ko-kr/azure/storage/blobs/storage-blob-delete-java
+    // 링크 참조해서 파일 있는지 확인해서 삭제하게
+    public void uploadBlobFromFile(String containerName, String blobName) {
         BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
         BlobClient blobClient = containerClient.getBlobClient(blobName);
         blobClient.delete();
     }
 
-    
 }

@@ -134,6 +134,11 @@ public class EasyportController {
 
         Profile profile = profileRepository.findByUserid(userid);
         model.addAttribute("profile", profile);
+
+        String imgurl = "https://easyportstorage.blob.core.windows.net/"+ userid + "/" + userid + "_profile.png";
+
+        model.addAttribute("imgurl", imgurl);
+        
         return "myboard";
     }
 
@@ -196,6 +201,10 @@ public class EasyportController {
 
         Profile profile = profileRepository.findByUserid(userid);
         model.addAttribute("profile", profile);
+        
+        String imgurl = "https://easyportstorage.blob.core.windows.net/"+ userid + "/" + userid + "_profile.png";
+
+        model.addAttribute("imgurl", imgurl);
 
         return "updateProfile"; // home.html을 렌더링
         //ㄴㅇㄹㄴㅇㄹ
