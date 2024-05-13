@@ -56,24 +56,31 @@ public class EasyportController {
     @PostMapping(path = "/signup")
     public String signup(@ModelAttribute("siteuser") SiteUser user, Model model) {
 
-        userRepository.save(user);
+        if (userRepository.findByUserid(user.getUserid()) == null) {
 
-        Profile profile = new Profile();
-        profile.setUserid(user.getUserid());
-        profile.setEmail(user.getEmail());
-        profile.setIntroduce("");
-        profile.setCanview(false);
+            userRepository.save(user);
 
-        String rankey = generateRandomKey();
-        profile.setViewkey(rankey);
-        profileRepository.save(profile);
+            Profile profile = new Profile();
+            profile.setUserid(user.getUserid());
+            profile.setEmail(user.getEmail());
+            profile.setIntroduce("");
+            profile.setCanview(false);
 
-        String userName = user.getName();
+            String rankey = generateRandomKey();
+            profile.setViewkey(rankey);
+            profileRepository.save(profile);
 
-        azureBlobService.createContainer(userName);
+            String userName = user.getUserid();
 
-        model.addAttribute("name", userName);
-        return "signup_done";
+            azureBlobService.createContainer(userName);
+
+            model.addAttribute("name", userName);
+            return "signup_done";
+        }
+        else{
+            return "error";
+        }
+
     }
 
     // 랜덤키 생성 코드
@@ -288,8 +295,8 @@ public class EasyportController {
 
     @GetMapping("/publicpost")
     public String showpublicItemDetails(@RequestParam("code") String code,
-    @RequestParam("no") int itemIndex,
-    Model model) {
+            @RequestParam("no") int itemIndex,
+            Model model) {
 
         System.out.println("받은거 확인 : " + code + "," + itemIndex);
 
