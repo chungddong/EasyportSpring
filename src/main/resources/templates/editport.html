@@ -127,7 +127,7 @@
             }
 
             .inputTitle {
-                
+
                 width: 99%;
                 font-size: 5vh;
                 border-radius: 1vh;
@@ -158,7 +158,7 @@
             <input type="hidden" th:field="*{content}" id="content"></input>
 
             <input class="inputDate" type="text" value="작성일 : 2024-05-08">
-            
+
             <input type="hidden" th:field="*{userid}" th:value="'특정 이름'">
 
         </form>
@@ -173,12 +173,16 @@
 
     <div class="toolBar">
 
-        <button class="fontbox" onclick="increaseFontSize()">
-            <i class="fa-solid fa-chevron-up fa-1x"></i>
-        </button>
-        <button class="fontbox" onclick="decreaseFontSize()">
-            <i class="fa-solid fa-chevron-down fa-1x"></i>
-        </button>
+        <select id="select-font-size">
+            <option value="">폰트 사이즈</option>
+            <option value="1">10px</option>
+            <option value="2">13px</option>
+            <option value="3">16px</option>
+            <option value="4">18px</option>
+            <option value="5">24px</option>
+            <option value="6">32px</option>
+            <option value="7">48px</option>
+        </select>
 
         <span class="fontbox">
             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -197,9 +201,6 @@
             <i class="fa-solid fa-ellipsis-vertical"></i>
         </span>
 
-        <button class="fontbox" id="btnJustify">
-            <i class="fa-solid fa-align-justify"></i>
-        </button>
         <button class="fontbox" id="btnLeftalign">
             <i class="fa-solid fa-align-left"></i>
         </button>
@@ -220,9 +221,6 @@
         <button class="fontbox" id="btnFill">
             <i class="fa-solid fa-fill"></i>
         </button>
-        <button class="fontbox" id="btnImage">
-            <i class="fa-regular fa-image"></i>
-        </button>
 
         <span class="fontbox">
             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -241,9 +239,20 @@
     const btnBold = document.getElementById('btnBold');
     const btnItalic = document.getElementById('btnItalic');
     const btnUnderline = document.getElementById('btnUnderline');
-    const btnJustify = document.getElementById('btnJustify');
     const btnLeftalign = document.getElementById('btnLeftalign');
     const btnCenteralign = document.getElementById('btnCenteralign');
+    const btnRightalign = document.getElementById('btnRightalign');
+    const fontSizeSelector = document.getElementById('select-font-size');
+    const fontSizeList = [10, 13, 16, 18, 24, 32, 48];
+
+    fontSizeSelector.addEventListener('change', function () {
+        changeFontSize(this.value);
+    });
+
+    function changeFontSize(size) {
+        document.execCommand('fontSize', false, size);
+        focusEditor();
+    }
 
 
     btnBold.addEventListener('click', function () {
@@ -258,17 +267,17 @@
         setStyle('underline');
     });
 
-    btnJustify.addEventListener('click', function () {
-        //setStyle('justifyFull ');
-        printEditorHTML();
-    });
-
     btnLeftalign.addEventListener('click', function () {
         setStyle('justifyLeft');
     });
 
+
     btnCenteralign.addEventListener('click', function () {
         setStyle('justifyCenter');
+    });
+
+    btnRightalign.addEventListener('click', function () {
+        setStyle('justifyRight');
     });
 
     // TODO : 지정 안하고 추가해야하는 서식들 추가해야함
@@ -279,6 +288,78 @@
         //글씨 스타일 지정함수 style에 넣는 값으로 스타일 지정
         document.execCommand(style, false, null);
         editor.focus({ preventScroll: true }); //에디터에 포커스
+    }
+
+    function increaseFontSize() {
+
+        // 현재 선택된 텍스트를 가져옵니다.
+        const selection = window.getSelection();
+
+        // 선택된 텍스트가 없으면 함수를 종료합니다.
+        if (selection.rangeCount === 0) return;
+
+        // 선택된 텍스트의 범위를 가져옵니다.
+        const range = selection.getRangeAt(0);
+
+        // 선택된 텍스트의 부모 노드를 가져옵니다.
+        const parentNode = range.startContainer.parentNode;
+
+        // 선택된 텍스트의 현재 글씨 크기를 가져옵니다.
+        const currentFontSize = window.getComputedStyle(parentNode, null).getPropertyValue('font-size');
+
+        // 새로운 글씨 크기를 설정합니다.
+        const newFontSize = parseFloat(currentFontSize) + 3;
+
+        // 새로운 span 요소를 만듭니다.
+        const newSpan = document.createElement('span');
+        newSpan.style.fontSize = `${newFontSize}px`;
+
+        // 선택된 텍스트를 span 요소로 감싸서 글씨 크기를 변경합니다.
+        newSpan.appendChild(range.extractContents());
+        range.insertNode(newSpan);
+
+        // 선택된 텍스트를 다시 선택합니다.
+        window.selection.clear();
+
+        selection.removeAllRanges();
+
+        selection.addRange(range);
+
+
+
+    }
+
+
+    function decreaseFontSize() {
+        // 현재 선택된 텍스트를 가져옵니다.
+        const selection = window.getSelection();
+
+        // 선택된 텍스트가 없으면 함수를 종료합니다.
+        if (selection.rangeCount === 0) return;
+
+        // 선택된 텍스트의 범위를 가져옵니다.
+        const range = selection.getRangeAt(0);
+
+        // 선택된 텍스트의 부모 노드를 가져옵니다.
+        const parentNode = range.startContainer.parentNode;
+
+        // 선택된 텍스트의 현재 글씨 크기를 가져옵니다.
+        const currentFontSize = window.getComputedStyle(parentNode, null).getPropertyValue('font-size');
+
+        // 새로운 글씨 크기를 설정합니다.
+        const newFontSize = parseFloat(currentFontSize) - 3;
+
+        // 새로운 span 요소를 만듭니다.
+        const newSpan = document.createElement('span');
+        newSpan.style.fontSize = `${newFontSize}px`;
+
+        // 선택된 텍스트를 span 요소로 감싸서 글씨 크기를 변경합니다.
+        newSpan.appendChild(range.extractContents());
+        range.insertNode(newSpan);
+
+        // 선택된 텍스트를 다시 선택합니다.
+        selection.removeAllRanges();
+        selection.addRange(range);
     }
 
     editor.addEventListener('input', printEditorHTML);
