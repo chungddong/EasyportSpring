@@ -74,12 +74,12 @@
 .card-item {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 50vh;
     height: 150px;
     background-color: #f1f1f1;
     margin: 10px;
     box-sizing: border-box;
-    border-radius: 2vh;
+    border-radius: 1vh;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
