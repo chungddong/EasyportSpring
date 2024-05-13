@@ -74,8 +74,8 @@
 .card-item {
     display: flex;
     flex-direction: column;
-    width: 50vh;
-    height: 20vh;
+    width: 45vh;
+    height: 35vh;
     background-color: #f1f1f1;
     margin: 3vh;
     box-sizing: border-box;
